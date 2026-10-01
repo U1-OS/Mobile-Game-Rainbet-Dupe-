@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Rainbet Mobile • Official Free Simulated Crypto Casino</title>
+  <meta name="description" content="100% Free Mobile Crypto Casino Game Simulator replicating Rainbet.com & Stake.com. Vegas Blackjack 3:2, Texas Hold'em, European Roulette, 10-Line Slots, Plinko, Crash, Mines, and Community Rain.">
+  <meta name="theme-color" content="#0a0e17">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Fullscreen Canvas for Falling Golden Rain Shower -->
+  <canvas id="globalRainCanvas"></canvas>
+  <!-- Fullscreen Canvas for 3D Gold Coin & Particle Celebration -->
+  <canvas id="celebrationCanvas" class="celebration-canvas"></canvas>
+
+  <!-- ================================================================= -->
+  <!-- 1. AUTHENTIC RAINBET LOADING / SPLASH SCREEN                     -->
+  <!-- ================================================================= -->
+  <div class="splash-screen" id="splashScreen">
+    <div class="splash-backdrop-glow"></div>
+    <div class="splash-content">
+      <div class="splash-logo-wrap">
+        <div class="splash-cloud-glow">🌧️</div>
+        <div class="splash-lightning">⚡</div>
+      </div>
+      <div class="splash-title">
+        <span class="brand-rain">RAIN</span><span class="brand-bet">BET</span>
+      </div>
+      <div class="splash-tagline">SIMULATED CRYPTO CASINO & ORIGINALS</div>
+      
+      <div class="splash-loader-bar">
+        <div class="splash-loader-fill" id="splashLoaderFill"></div>
+      </div>
+      <div class="splash-status-text" id="splashStatusText">Connecting to Provably Fair Server...</div>
+    </div>
+    <div class="splash-footer">
+      <span>100% Free Mobile Simulator</span> • <span>No Real Money Gambling</span>
+    </div>
+  </div>
+
+  <!-- Mobile Container Shell -->
+  <div class="app-container">
+
+    <!-- ================================================================= -->
+    <!-- 2. TOP HEADER BAR (AUTHENTIC RAINBET.COM NAVIGATION)             -->
+    <!-- ================================================================= -->
+    <header class="app-header">
+      <!-- Left: Menu Drawer Hamburger + Rainbet Brand Logo -->
+      <div class="header-left">
+        <button class="menu-toggle-btn" id="menuToggleBtn" title="Open Navigation Menu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <div class="rainbet-logo-area" id="headerLogoBtn" title="Back to Casino Lobby">
+          <div class="rainbet-icon-wrap">
+            <span class="logo-cloud">🌧️</span>
+            <span class="logo-spark">⚡</span>
+          </div>
+          <div class="rainbet-text-wrap">
+            <span class="brand-rain">RAIN</span><span class="brand-bet">BET</span>
+          </div>
+          <span class="brand-sim-tag">FREE</span>
+        </div>
+      </div>
+
+      <!-- Right: Wallet / Balance Pill, Profile Avatar, Chat & Sound -->
+      <div class="header-right">
+        <!-- Live Simulated Balance & Multi-Crypto Selector -->
+        <div class="wallet-pill" id="headerWalletPill">
+          <button class="curr-select-btn" id="headerCurrBtn" title="Select Crypto (USDT, BTC, ETH, SOL, LTC)">
+            <span class="curr-symbol-badge" id="currBadgeText">₮ USDT</span>
+            <span class="curr-arrow">▾</span>
+          </button>
+          <span class="balance-amount" id="headerBalance">$1,000.00</span>
+          <button class="deposit-btn" id="headerDepositBtn" title="Instant Free Refill">+ REFILL</button>
+        </div>
+
+        <!-- Currency Dropdown Quick Picker -->
+        <div class="crypto-dropdown" id="headerCryptoDropdown" style="display: none;">
+          <div class="crypto-opt active" data-curr="USDT"><span class="c-sym">₮</span> USDT <span class="c-rate">$1.00</span></div>
+          <div class="crypto-opt" data-curr="BTC"><span class="c-sym">₿</span> BTC <span class="c-rate">$65k</span></div>
+          <div class="crypto-opt" data-curr="ETH"><span class="c-sym">Ξ</span> ETH <span class="c-rate">$3.5k</span></div>
+          <div class="crypto-opt" data-curr="SOL"><span class="c-sym">◎</span> SOL <span class="c-rate">$150</span></div>
+          <div class="crypto-opt" data-curr="LTC"><span class="c-sym">Ł</span> LTC <span class="c-rate">$85</span></div>
+        </div>
+
+        <!-- Next-Gen Provably Fair Header Badge -->
+        <button class="header-fair-badge" id="headerFairBadge" title="Provably Fair Verification (HMAC-SHA256)">
+          <span class="fair-icon">🛡️</span>
+          <span class="fair-label">FAIR</span>
+          <span class="fair-status-dot"></span>
+        </button>
+
+        <!-- User Profile Pill (Avatar, Level, XP) -->
+        <button class="profile-pill-btn" id="headerProfileBtn" title="Account & Avatar">
+          <span class="profile-avatar-mini" id="headerAvatar">🦁</span>
+          <div class="profile-meta-mini">
+            <span class="profile-name-mini" id="headerUsername">RainRoller</span>
+            <span class="profile-lvl-mini" id="headerLvlBadge">LVL 1</span>
+          </div>
+        </button>
+
+        <!-- Live Rain Chat Toggle -->
+        <button class="header-chat-btn" id="headerChatBtn" title="Open Community Rain Chat">
+          <span>💬</span>
+          <span class="chat-badge-count" id="headerChatBadge">14</span>
+        </button>
+
+        <!-- Sound Toggle -->
+        <button class="sound-toggle-btn" id="headerSoundToggle" title="Toggle Sound">🔊</button>
+      </div>
+    </header>
+
+    <!-- Global Rain Event Alert Banner (Real Rainbet Drop Alert) -->
+    <div class="global-rain-banner" id="globalRainBanner" style="display: none;">
+      <div class="rain-banner-content">
+        <span class="rain-icon-anim">🌧️</span>
+        <div class="rain-info">
+          <div class="title">SIMULATED RAIN IS FALLING!</div>
+          <div class="subtitle"><span id="rainBannerAmount">$1,500</span> Active Rain Pool</div>
+        </div>
+      </div>
+      <div class="rain-claim-action">
+        <span class="rain-timer" id="rainBannerTimer">20s</span>
+        <button class="rain-claim-btn" id="rainClaimBtn">CLAIM FREE CHIPS</button>
+      </div>
+    </div>
+
+    <!-- Active Rain Ticker Strip -->
+    <div class="rain-ticker-strip" id="rainTickerStrip">
+      <div class="ticker-content">
+        <span class="ticker-icon">🌧️</span>
+        <span class="ticker-text"><strong>RAIN POOL:</strong> <span class="text-cyan font-bold" id="tickerPoolAmount">$1,450.00</span> • Drops every 30m</span>
+      </div>
+      <button class="ticker-tip-btn" id="tickerTipBtn">🌧️ TIP RAIN</button>
+    </div>
+
+    <!-- Main View Switcher Container -->
+    <main class="main-view-container">
+
+      <!-- =============================================================== -->
+      <!-- VIEW 1: CASINO & GAMES (LOBBY + GAME ARENA)                     -->
+      <!-- =============================================================== -->
+      <section class="view-panel active" id="view-games">
+        
+        <!-- ============================================================= -->
+        <!-- 3. REAL RAINBET CASINO LOBBY / HOME SCREEN                    -->
+        <!-- ============================================================= -->
+        <div class="casino-lobby" id="casinoLobby">
+
+          <!-- Hero Promotional Carousel (Stake / Rainbet Style) -->
+          <div class="hero-carousel" id="heroCarousel">
+            <div class="hero-carousel-track" id="heroCarouselTrack">
+              <!-- Slide 1: Rain Originals -->
+              <div class="hero-slide active slide-originals">
+                <div class="slide-badge">⚡ 99.0% RTP</div>
+                <h2 class="slide-title">RAIN ORIGINALS</h2>
+                <p class="slide-desc">Provably Fair Plinko, Crash, Mines, Dice, Limbo & Hi-Lo. Instant simulated action.</p>
+                <button class="slide-cta-btn" onclick="window.app?.openGame('plinko')">PLAY ORIGINALS →</button>
+              </div>
+              <!-- Slide 2: Real Tables -->
+              <div class="hero-slide slide-tables">
+                <div class="slide-badge">🃏 VEGAS RULES</div>
+                <h2 class="slide-title">REAL CASINO TABLES</h2>
+                <p class="slide-desc">Blackjack 3:2 with Split & Insurance, Texas Hold'em Poker, European Roulette & Baccarat.</p>
+                <button class="slide-cta-btn" onclick="window.app?.openGame('blackjack')">PLAY TABLES →</button>
+              </div>
+              <!-- Slide 3: Rain Pool -->
+              <div class="hero-slide slide-rain">
+                <div class="slide-badge">🌧️ HOURLY POT</div>
+                <h2 class="slide-title">COMMUNITY RAIN POOL</h2>
+                <p class="slide-desc">Free simulated cash rain showers in live chat! Claim your share or tip the community.</p>
+                <button class="slide-cta-btn" onclick="window.app?.switchTab('chat')">OPEN CHAT →</button>
+              </div>
+              <!-- Slide 4: 7-Day Streak -->
+              <div class="hero-slide slide-vip">
+                <div class="slide-badge">🎁 7-DAY STREAK</div>
+                <h2 class="slide-title">DAILY LOGIN BONUS</h2>
+                <p class="slide-desc">Log in daily to claim up to $10,000 in free chips and Lucky Wheel spins.</p>
+                <button class="slide-cta-btn" onclick="window.app?.openDailyBonusModal()">CLAIM TODAY →</button>
+              </div>
+            </div>
+            <div class="carousel-dots" id="carouselDots">
+              <span class="dot active" data-index="0"></span>
+              <span class="dot" data-index="1"></span>
+              <span class="dot" data-index="2"></span>
+              <span class="dot" data-index="3"></span>
+            </div>
+          </div>
+
+          <!-- Player Level & XP Progress Card -->
+          <div class="lobby-player-card" id="lobbyPlayerCard">
+            <div class="player-card-left">
+              <div class="player-avatar-large" id="lobbyAvatar">🦁</div>
+              <div class="player-card-info">
+                <div class="player-name-row">
+                  <span class="player-username" id="lobbyUsername">RainRoller</span>
+                  <span class="player-vip-tag" id="lobbyVipTag">BRONZE I</span>
+                </div>
+                <div class="player-level-row">
+                  <span class="player-level-badge" id="lobbyLevelBadge">Level 1</span>
+                  <span class="player-xp-count" id="lobbyXpCount">0 / 50 XP</span>
+                </div>
+                <div class="player-xp-bar">
+                  <div class="player-xp-fill" id="lobbyXpFill" style="width: 10%;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="player-card-actions">
+              <button class="player-action-pill btn-streak" id="lobbyStreakBtn" title="7-Day Streak Bonus">
+                <span class="pill-icon">🔥</span>
+                <span class="pill-text">Streak</span>
+              </button>
+              <button class="player-action-pill btn-auth" id="lobbyAuthBtn" title="Account & Avatar">
+                <span class="pill-icon">👤</span>
+                <span class="pill-text">Profile</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Search & Category Filters Bar -->
+          <div class="lobby-filter-bar">
+            <div class="lobby-search-wrap">
+              <span class="search-icon">🔍</span>
+              <input type="text" class="lobby-search-input" id="lobbySearchInput" placeholder="Search 12+ real games..." autocomplete="off">
+            </div>
+            <div class="category-filter-strip">
+              <button class="cat-filter-btn active" data-cat="all">🔥 All Games (12)</button>
+              <button class="cat-filter-btn" data-cat="originals">⚡ Originals (6)</button>
+              <button class="cat-filter-btn" data-cat="cards">🃏 Real Tables (4)</button>
+              <button class="cat-filter-btn" data-cat="slots">🎰 Slots & Cases (2)</button>
+            </div>
+          </div>
+
+          <!-- 14 Real Casino Game Cards Grid (High-Quality Rainbet 3D Posters) -->
+          <div class="game-cards-grid" id="gameCardsGrid">
+            
+            <!-- Card 1: Blackjack -->
+            <div class="game-poster-card card-blackjack" data-game="blackjack" data-category="cards" onclick="window.app?.openGame('blackjack')">
+              <div class="poster-specular-glare"></div>
+              <div class="poster-badge-top">
+                <span class="provider-tag">REAL TABLE</span>
+                <span class="live-count">● 3,420</span>
+              </div>
+              <div class="poster-visual">
+                <div class="poster-art-container" data-poster="blackjack"></div>
+              </div>
+              <div class="poster-footer">
+                <div class="poster-title">Blackjack 3:2</div>
+                <div class="poster-rtp">99.54% RTP • 6-Deck Shoe</div>
+              </div>
+              <div class="poster-play-overlay">
+                <span class="play-icon-circle">▶</span>
+                <span class="play-text">PLAY NOW</span>
+              </div>
+            </div>
+
+            <!-- Card 2: Texas Hold'em Poker -->
+            <div class="game-poster-card card-poker" data-game="poker" data-category="cards" onclick="window.app?.openGame('poker')">
+              <div class="poster-specular-glare"></div>
+              <div class="poster-badge-top">
+                <span class="provider-tag">REAL TABLE</span>
+                <span class="live-count">● 2,190</span>
+              </div>
+              <div class="poster-visual">
+                <div class="poster-art-container" data-poster="poker"></div>
+              </div>
+              <div class="poster-footer">
+                <div class="poster-title">Texas Hold'em</div>
+                <div class="poster-rtp">98.80% RTP • AA Bonus</div>
+              </div>
+              <div class="poster-play-overlay">
+                <span class="play-icon-circle">▶</span>
+                <span class="play-text">PLAY NOW</span>
+              </div>
+            </div>
+
+            <!-- Card 3: European Roulette -->
+            <div class="game-poster-card card-roulette" data-game="roulette" data-category="cards" onclick="window.app?.openGame('roulette')">
+              <div class="poster-specular-glare"></div>
+              <div class="poster-badge-top">
+                <span class="provider-tag">REAL TABLE</span>
+                <span class="live-count">● 1,840</span>
+              </div>
+              <div class="poster-visual">
+                <div class="poster-art-container" data-poster="roulette"></div>
+              </div>
+              <div class="poster-footer">
+                <div class="poster-title">European Roulette</div>
+                <div class="poster-rtp">97.30% RTP • 37 Numbers</div>
+              </div>
+              <div class="poster-play-overlay">
+                <span class="play-icon-circle">▶</span>
+                <span class="play-text">PLAY NOW</span>
+              </div>
+            </div>
+
+            <!-- Card 4: Baccarat -->
+            <div class="game-poster-card card-baccarat" data-game="baccarat" data-category="cards" onclick="window.app?.openGame('baccarat')">
+              <div class="poster-specular-glare"></div>
+              <div class="poster-badge-top">
+                <span class="provider-tag">REAL TABLE</span>
+                <span class="live-count">● 950</span>
+              </div>
+              <div class="poster-visual">
+                <div class="poster-art-container" data-poster="baccarat"></div>
+              </div>
+              <div class="poster-footer">
+                <div class="poster-title">Baccarat Punto Banco</div>
+                <div class="poster-rtp">98.94% RTP • Tableau</div>
+              </div>
+              <div class="poster-play-overlay">
+                <span class="play-icon-circle">▶</span>
+                <span class="play-text">PLAY NOW</span>
+              </div>
+            </div>
+
+            <!-- Card 5: Plinko -->
+            <div class="game-poster-card card-plinko" data-game="plinko" data-category="originals" onclick="window.app?.openGame('plinko')">
+              <div class="poster-specular-glare"></div>
+              <div class="poster-badge-top">
+                <span class="provider-tag tag-cyan">RAIN ORIGINAL</span>
+                <span class="live-count">● 4,810</span>
+              </div>
+              <div class="poster-visual">
+                <div class="poster-art-container" data-poster="plinko"></div>
+              </div>
+              <div class="poster-footer">
+                <div class="poster-title">Plinko 1000x</div>
+                <div class="poster-rtp">99.00% RTP • 16 Rows</div>
+              </div>
+              <div class="poster-play-overlay">
+                <span class="play-icon-circle">▶</span>
+                <span class="play-text">PLAY NOW</span>
+              </div>
+            </div>
+
+            <!-- Card 6: Crash -->
+            <div class="game-poster-card card-crash" data-game="crash" data-category="originals" onclick="window.app?.openGame('crash')">
+              <div class="poster-specular-glare"></div>
+              <div class="poster-badge-top">
+                <span class="provider-tag tag-cyan">RAIN ORIGINAL</span>
+                <span class="live-count">● 5,230</span>
+              </div>
+              <div class="poster-visual">
+                <div class="poster-art-container" data-poster="crash"></div>
+              </div>
+              <div class="poster-footer">
+                <div class="poster-title">Crash Rocket</div>
+                <div class="poster-rtp">99.00% RTP • Moonshots</div>
+              </div>
+              <div class="poster-play-overlay">
+                <span class="play-icon-circle">▶</span>
+                <span class="play-text">PLAY NOW</span>
+              </div>
+            </div>
+
+            <!-- Card 7: Mines -->
+            <div class="game-poster-card card-mines" data-game="mines" data-category="originals" onclick="window.app?.openGame('mines')">
+              <div class="poster-specular-glare"></div>
+              <div class="poster-badge-top">
+                <span class="provider-tag tag-cyan">RAIN ORIGINAL</span>
+                <span class="live-count">● 3,110</span>
+              </div>
+              <div class="poster-visual">
+                <div class="poster-art-container" data-poster="mines"></div>
+              </div>
+              <div class="poster-footer">
+                <div class="poster-title">Mines Multiplier</div>
+                <div class="poster-rtp">99.00% RTP • 1-24 Mines</div>
+              </div>
+              <div class="poster-play-overlay">
+                <span class="play-icon-circle">▶</span>
+                <span class="play-text">PLAY NOW</span>
+              </div>
+            </div>
+
+            <!-- Card 8: Dice -->
+            <div class="game-poster-card card-dice" data-game="dice" data-category="originals" onclick="window.app?.openGame('dice')">
+              <div class="poster-specular-glare"></div>
+              <div class="poster-badge-top">
+                <span class="provider-tag tag-cyan">RAIN ORIGINAL</span>
+                <span class="live-count">● 1,650</span>
+              </div>
+              <div class="poster-visual">
+                <div class="poster-art-container" data-poster="dice"></div>
+              </div>
+              <div class="poster-footer">
+                <div class="poster-title">Classic Dice</div>
+                <div class="poster-rtp">99.00% RTP • 990x Target</div>
+              </div>
+              <div class="poster-play-overlay">
+                <span class="play-icon-circle">▶</span>
+                <span class="play-text">PLAY NOW</span>
+              </div>
+            </div>
+
+            <!-- Card 9: Limbo -->
+            <div class="game-poster-card card-limbo" data-game="limbo" data-category="originals" onclick="window.app?.openGame('limbo')">
+              <div class="poster-specular-glare"></div>
+              <div class="poster-badge-top">
+                <span class="provider-tag tag-cyan">RAIN ORIGINAL</span>
+                <span class="live-count">● 1,220</span>
+              </div>
+              <div class="poster-visual">
+                <div class="poster-art-container" data-poster="limbo"></div>
+              </div>
+              <div class="poster-footer">
+                <div class="poster-title">Limbo Moon</div>
+                <div class="poster-rtp">99.00% RTP • 1,000,000x</div>
+              </div>
+              <div class="poster-play-overlay">
+                <span class="play-icon-circle">▶</span>
+                <span class="play-text">PLAY NOW</span>
+              </div>
+            </div>
+
+            <!-- Card 10: Hi-Lo -->
+            <div class="game-poster-card card-hilo" data-game="hilo" data-category="originals" onclick="window.app?.openGame('hilo')">
+              <div class="poster-specular-glare"></div>
+              <div class="poster-badge-top">
+                <span class="provider-tag tag-cyan">RAIN ORIGINAL</span>
+                <span class="live-count">● 870</span>
+              </div>
+              <div class="poster-visual">
+                <div class="poster-art-container" data-poster="hilo"></div>
+              </div>
+              <div class="poster-footer">
+                <div class="poster-title">Hi-Lo Card Master</div>
+                <div class="poster-rtp">98.50% RTP • Streaks</div>
+              </div>
+              <div class="poster-play-overlay">
+                <span class="play-icon-circle">▶</span>
+                <span class="play-text">PLAY NOW</span>
+              </div>
+            </div>
+
+            <!-- Card 11: Lightning Link (Vegas Classic Slot) -->
+            <div class="game-poster-card card-lightning" data-game="lightning" data-category="slots" onclick="window.app?.openGame('lightning')">
+              <div class="poster-specular-glare"></div>
+              <div class="poster-badge-top">
+                <span class="provider-tag tag-gold">HOLD & SPIN</span>
+                <span class="live-count">● 8,190</span>
+              </div>
+              <div class="poster-visual">
+                <div class="poster-art-container" data-poster="lightning"></div>
+              </div>
+              <div class="poster-footer">
+                <div class="poster-title">Lightning Link</div>
+                <div class="poster-rtp">96.80% RTP • 4 Jackpots</div>
+              </div>
+              <div class="poster-play-overlay">
+                <span class="play-icon-circle">▶</span>
+                <span class="play-text">PLAY NOW</span>
+              </div>
+            </div>
+
+            <!-- Card 12: Gates of Olympus 1000 (Zeus Scatter Slot) -->
+            <div class="game-poster-card card-olympus" data-game="olympus" data-category="slots" onclick="window.app?.openGame('olympus')">
+              <div class="poster-specular-glare"></div>
+              <div class="poster-badge-top">
+                <span class="provider-tag tag-cyan">ZEUS 1000</span>
+                <span class="live-count">● 9,450</span>
+              </div>
+              <div class="poster-visual">
+                <div class="poster-art-container" data-poster="olympus"></div>
+              </div>
+              <div class="poster-footer">
+                <div class="poster-title">Gates of Olympus</div>
+                <div class="poster-rtp">96.50% RTP • Tumble Pays</div>
+              </div>
+              <div class="poster-play-overlay">
+                <span class="play-icon-circle">▶</span>
+                <span class="play-text">PLAY NOW</span>
+              </div>
+            </div>
+
+            <!-- Card 13: Slots -->
+            <div class="game-poster-card card-slots" data-game="slots" data-category="slots" onclick="window.app?.openGame('slots')">
+              <div class="poster-specular-glare"></div>
+              <div class="poster-badge-top">
+                <span class="provider-tag tag-gold">VIDEO SLOT</span>
+                <span class="live-count">● 6,400</span>
+              </div>
+              <div class="poster-visual">
+                <div class="poster-art-container" data-poster="slots"></div>
+              </div>
+              <div class="poster-footer">
+                <div class="poster-title">Rain Crown Slots</div>
+                <div class="poster-rtp">96.50% RTP • 10 Paylines</div>
+              </div>
+              <div class="poster-play-overlay">
+                <span class="play-icon-circle">▶</span>
+                <span class="play-text">PLAY NOW</span>
+              </div>
+            </div>
+
+            <!-- Card 14: Mystery Cases -->
+            <div class="game-poster-card card-cases" data-game="cases" data-category="slots" onclick="window.app?.openGame('cases')">
+              <div class="poster-specular-glare"></div>
+              <div class="poster-badge-top">
+                <span class="provider-tag tag-purple">CASE BATTLES</span>
+                <span class="live-count">● 2,890</span>
+              </div>
+              <div class="poster-visual">
+                <div class="poster-art-container" data-poster="cases"></div>
+              </div>
+              <div class="poster-footer">
+                <div class="poster-title">Mystery Cases</div>
+                <div class="poster-rtp">97.00% RTP • Unbox Skins</div>
+              </div>
+              <div class="poster-play-overlay">
+                <span class="play-icon-circle">▶</span>
+                <span class="play-text">PLAY NOW</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Live Community Bets Feed in Lobby -->
+          <div class="lobby-live-bets-section">
+            <div class="section-header-row">
+              <span class="section-title">⚡ Live High Rollers</span>
+              <span class="online-indicator">● 1,482 Players Online</span>
+            </div>
+            <div class="history-table-container">
+              <table class="history-table">
+                <thead>
+                  <tr>
+                    <th>Game</th>
+                    <th>Player</th>
+                    <th>Bet</th>
+                    <th>Mult</th>
+                    <th>Payout</th>
+                  </tr>
+                </thead>
+                <tbody id="lobbyLiveBetsTableBody">
+                  <!-- Dynamically populated live bets stream -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ============================================================= -->
+        <!-- 4. AUTHENTIC RAINBET GAME ARENA (ACTIVE WHEN IN-GAME)         -->
+        <!-- ============================================================= -->
+        <div class="game-arena" id="gameArena" style="display: none;">
+
+          <!-- Top Game Action Bar -->
+          <div class="game-arena-header">
+            <button class="back-to-lobby-btn" id="backToLobbyBtn" title="Back to Casino Lobby">
+              <span>←</span> Lobby
+            </button>
+            <div class="game-arena-title">
+              <span class="arena-game-name" id="arenaGameTitle">Blackjack 3:2</span>
+              <span class="arena-rtp-badge" id="arenaRtpBadge">99.54% RTP</span>
+            </div>
+            <div class="game-arena-tools">
+              <button class="tool-btn" id="arenaRulesBtn" title="Game Rules & Paytable">ℹ️ Rules</button>
+              <button class="tool-btn" id="arenaFairnessBtn" title="Provably Fair Verification">⚖️</button>
+            </div>
+          </div>
+
+          <!-- Quick Game Switcher Bar (While In-Game) -->
+          <div class="game-selector-strip" id="arenaGameStrip">
+            <button class="game-select-tab" data-game="blackjack" data-category="cards"><span class="tab-icon">🃏</span> Blackjack</button>
+            <button class="game-select-tab" data-game="poker" data-category="cards"><span class="tab-icon">♠️</span> Poker</button>
+            <button class="game-select-tab" data-game="roulette" data-category="cards"><span class="tab-icon">🎡</span> Roulette</button>
+            <button class="game-select-tab" data-game="baccarat" data-category="cards"><span class="tab-icon">👑</span> Baccarat</button>
+            <button class="game-select-tab" data-game="plinko" data-category="originals"><span class="tab-icon">🟣</span> Plinko</button>
+            <button class="game-select-tab" data-game="crash" data-category="originals"><span class="tab-icon">🚀</span> Crash</button>
+            <button class="game-select-tab" data-game="mines" data-category="originals"><span class="tab-icon">💎</span> Mines</button>
+            <button class="game-select-tab" data-game="dice" data-category="originals"><span class="tab-icon">🎲</span> Dice</button>
+            <button class="game-select-tab" data-game="limbo" data-category="originals"><span class="tab-icon">📈</span> Limbo</button>
+            <button class="game-select-tab" data-game="hilo" data-category="originals"><span class="tab-icon">🔼</span> Hi-Lo</button>
+            <button class="game-select-tab" data-game="lightning" data-category="slots"><span class="tab-icon">⚡</span> Lightning</button>
+            <button class="game-select-tab" data-game="olympus" data-category="slots"><span class="tab-icon">🏛️</span> Olympus</button>
+            <button class="game-select-tab" data-game="slots" data-category="slots"><span class="tab-icon">🎰</span> Crown</button>
+            <button class="game-select-tab" data-game="cases" data-category="slots"><span class="tab-icon">📦</span> Cases</button>
+          </div>
+
+          <!-- STAGE: BLACKJACK -->
+          <div class="game-stage" id="stage-blackjack">
+            <div class="blackjack-container" id="blackjackContainer"></div>
+          </div>
+
+          <!-- STAGE: POKER -->
+          <div class="game-stage" id="stage-poker">
+            <div class="poker-container" id="pokerContainer"></div>
+          </div>
+
+          <!-- STAGE: ROULETTE -->
+          <div class="game-stage" id="stage-roulette">
+            <div class="roulette-container" id="rouletteContainer"></div>
+          </div>
+
+          <!-- STAGE: BACCARAT -->
+          <div class="game-stage" id="stage-baccarat">
+            <div class="baccarat-container" id="baccaratContainer"></div>
+          </div>
+
+          <!-- STAGE: PLINKO -->
+          <div class="game-stage" id="stage-plinko">
+            <div class="plinko-canvas-container" id="plinkoContainer"></div>
+            <div class="plinko-options-bar">
+              <div class="option-group">
+                <label for="plinkoRiskSelect">Risk Level</label>
+                <select class="select-control" id="plinkoRiskSelect">
+                  <option value="low">Low Risk</option>
+                  <option value="medium">Medium Risk</option>
+                  <option value="high" selected>High Risk (1000x Max)</option>
+                </select>
+              </div>
+              <div class="option-group">
+                <label for="plinkoRowsSelect">Rows Count</label>
+                <select class="select-control" id="plinkoRowsSelect">
+                  <option value="8">8 Rows</option>
+                  <option value="10">10 Rows</option>
+                  <option value="12">12 Rows</option>
+                  <option value="14">14 Rows</option>
+                  <option value="16" selected>16 Rows</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE: CRASH -->
+          <div class="game-stage" id="stage-crash">
+            <div class="crash-container" id="crashContainer"></div>
+            <div class="crash-options-bar">
+              <div class="option-group">
+                <label for="crashAutoCashoutInput">Auto Cashout (Optional Multiplier)</label>
+                <input type="number" class="input-control" id="crashAutoCashoutInput" placeholder="e.g. 2.00" step="0.1" min="1.01">
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE: MINES -->
+          <div class="game-stage" id="stage-mines">
+            <div class="mines-container" id="minesContainer"></div>
+            <div class="plinko-options-bar">
+              <div class="option-group">
+                <label for="minesCountSelect">Number of Mines (1-24)</label>
+                <select class="select-control" id="minesCountSelect">
+                  <option value="1">1 Mine</option>
+                  <option value="3" selected>3 Mines</option>
+                  <option value="5">5 Mines</option>
+                  <option value="10">10 Mines</option>
+                  <option value="20">20 Mines (Insane)</option>
+                  <option value="24">24 Mines (1-Tile Jackpot)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE: DICE -->
+          <div class="game-stage" id="stage-dice">
+            <div class="dice-container" id="diceContainer"></div>
+          </div>
+
+          <!-- STAGE: LIMBO -->
+          <div class="game-stage" id="stage-limbo">
+            <div class="limbo-container" id="limboContainer"></div>
+          </div>
+
+          <!-- STAGE: HI-LO -->
+          <div class="game-stage" id="stage-hilo">
+            <div class="hilo-container" id="hiloContainer"></div>
+          </div>
+
+          <!-- STAGE: LIGHTNING LINK -->
+          <div class="game-stage" id="stage-lightning">
+            <div class="lightning-container" id="lightningContainer"></div>
+          </div>
+
+          <!-- STAGE: GATES OF OLYMPUS -->
+          <div class="game-stage" id="stage-olympus">
+            <div class="olympus-container" id="olympusContainer"></div>
+          </div>
+
+          <!-- STAGE: RAIN SLOTS -->
+          <div class="game-stage" id="stage-slots">
+            <div class="slots-container" id="slotsContainer"></div>
+          </div>
+
+          <!-- STAGE: MYSTERY CASES -->
+          <div class="game-stage" id="stage-cases">
+            <div class="cases-container" id="casesContainer"></div>
+          </div>
+
+          <!-- Live Bets Table Under Game -->
+          <div class="arena-live-bets-section">
+            <div class="section-header-row">
+              <span class="section-title">⚡ Live High Rollers</span>
+              <span class="online-indicator">● 1,482 Online</span>
+            </div>
+            <div class="history-table-container">
+              <table class="history-table">
+                <thead>
+                  <tr>
+                    <th>Game</th>
+                    <th>Player</th>
+                    <th>Bet</th>
+                    <th>Mult</th>
+                    <th>Payout</th>
+                  </tr>
+                </thead>
+                <tbody id="liveBetsTableBody">
+                  <!-- Dynamically populated live bets stream -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =============================================================== -->
+      <!-- VIEW 2: LIVE CHAT & COMMUNITY RAIN SHOWER                       -->
+      <!-- =============================================================== -->
+      <section class="view-panel" id="view-chat">
+        <div class="chat-container">
+          <div class="chat-action-bar">
+            <button class="tip-rain-btn" id="makeItRainBtn">🌧️ MAKE IT RAIN (TIP POOL)</button>
+          </div>
+          <div class="chat-messages-list" id="chatMessagesList">
+            <!-- Simulated lively player chat messages -->
+          </div>
+          <form class="chat-input-form" id="chatInputForm">
+            <input type="text" class="chat-text-input" id="chatMessageInput" placeholder="Send a message to live players..." maxlength="120" autocomplete="off">
+            <button type="submit" class="chat-send-btn">Send</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- =============================================================== -->
+      <!-- VIEW 3: REWARDS & VIP LADDER                                   -->
+      <!-- =============================================================== -->
+      <section class="view-panel" id="view-rewards">
+        <div class="rewards-container">
+          
+          <!-- VIP Level Card Banner -->
+          <div class="vip-card-banner">
+            <div class="vip-header">
+              <span class="vip-title-hero" id="vipCurrentTierName">Bronze Tier</span>
+              <span style="font-size: 11px; font-weight: 800; color: var(--stake-green);">VIP CLUB</span>
+            </div>
+            <div class="vip-progress-bar">
+              <div class="vip-progress-fill" id="vipProgressBarFill" style="width: 25%;"></div>
+            </div>
+            <div class="vip-progress-sub">
+              <span>Progress</span>
+              <span id="vipProgressPercent">25% to Silver</span>
+            </div>
+          </div>
+
+          <!-- Rakeback Box -->
+          <div class="rakeback-action-box">
+            <div>
+              <div style="font-size: 11px; color: var(--text-muted); font-weight: 700;">ACCUMULATED RAKEBACK</div>
+              <div style="font-size: 18px; font-weight: 900; color: var(--stake-green);" id="claimableRakebackDisplay">$0.00</div>
+            </div>
+            <button class="claim-rakeback-btn" id="claimRakebackBtn">CLAIM RAKEBACK</button>
+          </div>
+
+          <!-- Daily Streak Shortcut Card -->
+          <div class="daily-streak-shortcut-card">
+            <div class="shortcut-info">
+              <span class="shortcut-icon">🔥</span>
+              <div>
+                <div class="shortcut-title">7-Day Daily Login Streak</div>
+                <div class="shortcut-sub">Claim up to $10,000 + Lucky Spin</div>
+              </div>
+            </div>
+            <button class="shortcut-claim-btn" id="rewardsDailyBonusBtn">OPEN CALENDAR</button>
+          </div>
+
+          <!-- Lucky Fortune Wheel Section -->
+          <div class="lucky-wheel-section">
+            <div style="text-align: center;">
+              <h3 style="font-size: 16px; font-weight: 900; color: #ffffff;">LUCKY REWARDS WHEEL</h3>
+              <p style="font-size: 11px; color: var(--text-muted);">Spin for up to $10,000 in simulated free chips!</p>
+            </div>
+            <div class="wheel-wrapper">
+              <div class="wheel-pointer"></div>
+              <canvas id="luckyWheelCanvas" width="260" height="260"></canvas>
+            </div>
+            <button class="spin-wheel-btn" id="spinWheelBtn">SPIN WHEEL</button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================== -->
+      <!-- VIEW 4: STATS & USER BET HISTORY                               -->
+      <!-- =============================================================== -->
+      <section class="view-panel" id="view-stats">
+        <div class="stats-container">
+          <h3 style="font-size: 15px; font-weight: 900; color: #ffffff;">PLAYER CAREER STATS</h3>
+          <div class="stats-grid-cards">
+            <div class="stat-metric-card">
+              <span class="label">Total Wagered</span>
+              <span class="val text-white" id="statTotalWagered">$0.00</span>
+            </div>
+            <div class="stat-metric-card">
+              <span class="label">Total Won</span>
+              <span class="val text-green" id="statTotalWon">$0.00</span>
+            </div>
+            <div class="stat-metric-card">
+              <span class="label">Net Profit</span>
+              <span class="val text-green" id="statNetProfit">$0.00</span>
+            </div>
+            <div class="stat-metric-card">
+              <span class="label">Total Bets</span>
+              <span class="val text-cyan" id="statTotalBets">0</span>
+            </div>
+            <div class="stat-metric-card">
+              <span class="label">Biggest Win</span>
+              <span class="val text-gold" id="statBiggestWin">$0.00</span>
+            </div>
+            <div class="stat-metric-card">
+              <span class="label">Highest Multiplier</span>
+              <span class="val text-purple" id="statBiggestMult">0.00x</span>
+            </div>
+          </div>
+
+          <h3 style="font-size: 15px; font-weight: 900; color: #ffffff; margin-top: 10px;">RECENT BET HISTORY</h3>
+          <div class="history-table-container">
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th>Game</th>
+                  <th>Bet</th>
+                  <th>Mult</th>
+                  <th>Payout</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody id="userHistoryTableBody">
+                <!-- User's own bet history rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================== -->
+      <!-- VIEW 5: PROVABLY FAIR VERIFIER                                 -->
+      <!-- =============================================================== -->
+      <section class="view-panel" id="view-fairness">
+        <div class="fairness-container">
+          <div class="fairness-card">
+            <div class="title">⚖️ 100% PROVABLY FAIR SIMULATION</div>
+            <div class="desc">Every game outcome in Rainbet uses cryptographic hashing (SHA-256) combined with your Client Seed and Nonce. Outcomes cannot be manipulated.</div>
+          </div>
+
+          <div class="fairness-card">
+            <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">ACTIVE CLIENT SEED</label>
+            <input type="text" class="input-control" id="pfClientSeedInput" value="rainstake-seed-abc">
+          </div>
+
+          <div class="fairness-card">
+            <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">SERVER SEED (SHA-256 HASH)</label>
+            <div class="seed-box" id="pfServerHashDisplay">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</div>
+          </div>
+
+          <div class="fairness-card">
+            <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">TOTAL BET NONCE</label>
+            <div class="seed-box" id="pfNonceDisplay">1</div>
+            <button class="rotate-seed-btn" id="rotateSeedBtn">GENERATE NEW SEED PAIR</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- =============================================================== -->
+    <!-- UNIFIED BOTTOM BETTING DOCK (MOBILE THUMB CONTROLLER)           -->
+    <!-- =============================================================== -->
+    <div class="unified-bet-dock" id="unifiedBetDock" style="display: none;">
+      <div class="dock-controls-row">
+        <!-- Bet Input Field -->
+        <div class="bet-input-wrapper">
+          <span class="currency-sym">$</span>
+          <input type="number" class="bet-number-input" id="unifiedBetInput" value="10.00" step="1" min="0.1">
+        </div>
+
+        <!-- Quick Bet Modifier Chips -->
+        <div class="quick-bet-strip">
+          <button class="bet-modifier-btn" data-action="half">½</button>
+          <button class="bet-modifier-btn" data-action="double">2×</button>
+          <button class="bet-modifier-btn" data-action="add_25">+25</button>
+          <button class="bet-modifier-btn" data-action="add_100">+100</button>
+          <button class="bet-modifier-btn" data-action="max">MAX</button>
+        </div>
+      </div>
+
+      <!-- Main & Sub Action Buttons -->
+      <div class="dock-action-row">
+        <button class="dock-main-btn btn-green" id="mainActionBtn">DEAL / PLAY</button>
+        <button class="dock-sub-btn" id="subActionBtn" style="display: none;">AUTO</button>
+      </div>
+    </div>
+
+    <!-- =============================================================== -->
+    <!-- BOTTOM TAB NAVIGATION BAR                                       -->
+    <!-- =============================================================== -->
+    <nav class="bottom-nav-bar">
+      <button class="nav-tab-btn active" data-tab="games">
+        <span class="nav-icon">🎰</span>
+        <span class="nav-label">Casino</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="chat">
+        <span class="nav-icon">💬</span>
+        <span class="nav-label">Rain Chat</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="rewards">
+        <span class="nav-icon">🎁</span>
+        <span class="nav-label">VIP & Gifts</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="stats">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Stats</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="fairness">
+        <span class="nav-icon">⚖️</span>
+        <span class="nav-label">Fairness</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- 5. SLIDE-OUT RAINBET MOBILE DRAWER (HAMBURGER MENU)              -->
+  <!-- ================================================================= -->
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="side-drawer" id="sideDrawer">
+    <div class="drawer-header">
+      <div class="drawer-brand">
+        <span class="logo-cloud">🌧️</span>
+        <span class="brand-rain">RAIN</span><span class="brand-bet">BET</span>
+      </div>
+      <button class="drawer-close-btn" id="drawerCloseBtn">✕</button>
+    </div>
+
+    <div class="drawer-body">
+      <!-- Player Mini Profile -->
+      <div class="drawer-profile-card" id="drawerProfileCard">
+        <div class="drawer-avatar" id="drawerAvatar">🦁</div>
+        <div class="drawer-profile-meta">
+          <div class="drawer-username" id="drawerUsername">RainRoller</div>
+          <div class="drawer-tier-badge" id="drawerTierBadge">BRONZE I • LVL 1</div>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="drawer-links-group">
+        <div class="drawer-group-title">CASINO</div>
+        <button class="drawer-link-btn" onclick="window.app?.backToLobby(); window.app?.closeDrawer();">
+          <span class="icon">🎰</span> Casino Lobby
+        </button>
+        <button class="drawer-link-btn" onclick="window.app?.filterCategory('originals'); window.app?.backToLobby(); window.app?.closeDrawer();">
+          <span class="icon">⚡</span> Rain Originals
+        </button>
+        <button class="drawer-link-btn" onclick="window.app?.filterCategory('cards'); window.app?.backToLobby(); window.app?.closeDrawer();">
+          <span class="icon">🃏</span> Real Table & Card Games
+        </button>
+        <button class="drawer-link-btn" onclick="window.app?.filterCategory('slots'); window.app?.backToLobby(); window.app?.closeDrawer();">
+          <span class="icon">🎰</span> Video Slots & Cases
+        </button>
+      </div>
+
+      <div class="drawer-links-group">
+        <div class="drawer-group-title">REWARDS & COMMUNITY</div>
+        <button class="drawer-link-btn" onclick="window.app?.openDailyBonusModal(); window.app?.closeDrawer();">
+          <span class="icon">🔥</span> 7-Day Login Streak
+        </button>
+        <button class="drawer-link-btn" onclick="window.app?.switchTab('chat'); window.app?.closeDrawer();">
+          <span class="icon">🌧️</span> Active Rain Pool ($1,450)
+        </button>
+        <button class="drawer-link-btn" onclick="window.app?.switchTab('rewards'); window.app?.closeDrawer();">
+          <span class="icon">👑</span> VIP Club & Rakeback
+        </button>
+        <button class="drawer-link-btn" onclick="window.app?.openDepositModal(); window.app?.closeDrawer();">
+          <span class="icon">💵</span> Free Refill Faucet
+        </button>
+        <button class="drawer-link-btn" onclick="window.app?.openAuthModal(); window.app?.closeDrawer();">
+          <span class="icon">👤</span> Switch Profile / Auth
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================================================================= -->
+  <!-- 6. APPLE & ANDROID SIGN-IN / PROFILE CUSTOMIZATION MODAL          -->
+  <!-- ================================================================= -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-card modal-auth">
+      <div class="modal-header">
+        <div class="modal-title-row">
+          <span class="modal-icon">👤</span>
+          <span class="modal-title">Player Profile & Sign In</span>
+        </div>
+        <button class="modal-close-btn" id="closeAuthModalBtn">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-desc">Connect your simulated mobile account with Apple or Google, or play as an anonymous guest.</p>
+
+        <!-- Native Auth Buttons -->
+        <div class="auth-buttons-col">
+          <button class="auth-btn btn-apple" id="appleSignInBtn">
+            <span class="auth-btn-icon"></span> Continue with Apple
+          </button>
+          <button class="auth-btn btn-google" id="googleSignInBtn">
+            <span class="auth-btn-icon">G</span> Continue with Google
+          </button>
+          <button class="auth-btn btn-guest" id="guestSignInBtn">
+            <span class="auth-btn-icon">👤</span> Play as Guest
+          </button>
+        </div>
+
+        <div class="auth-divider"><span>OR CUSTOMIZE PROFILE</span></div>
+
+        <!-- Nickname Input -->
+        <div class="auth-field-group">
+          <label for="profileUsernameInput">Nickname</label>
+          <input type="text" class="input-control" id="profileUsernameInput" placeholder="Enter username..." maxlength="18">
+        </div>
+
+        <!-- Avatar Picker (12 Avatars) -->
+        <div class="auth-field-group">
+          <label>Select Casino Avatar</label>
+          <div class="avatar-picker-grid" id="avatarPickerGrid">
+            <button class="avatar-option" data-avatar="🦁">🦁</button>
+            <button class="avatar-option" data-avatar="🐺">🐺</button>
+            <button class="avatar-option" data-avatar="🐯">🐯</button>
+            <button class="avatar-option" data-avatar="🦅">🦅</button>
+            <button class="avatar-option" data-avatar="🐉">🐉</button>
+            <button class="avatar-option" data-avatar="🦊">🦊</button>
+            <button class="avatar-option" data-avatar="🐻">🐻</button>
+            <button class="avatar-option" data-avatar="🐼">🐼</button>
+            <button class="avatar-option" data-avatar="👑">👑</button>
+            <button class="avatar-option" data-avatar="💎">💎</button>
+            <button class="avatar-option" data-avatar="⚡">⚡</button>
+            <button class="avatar-option" data-avatar="🚀">🚀</button>
+          </div>
+        </div>
+
+        <button class="modal-action-btn btn-green" id="saveProfileBtn">SAVE PROFILE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- 7. 7-DAY DAILY LOGIN STREAK REWARDS CALENDAR MODAL               -->
+  <!-- ================================================================= -->
+  <div class="modal-overlay" id="dailyBonusModal">
+    <div class="modal-card modal-streak">
+      <div class="modal-header">
+        <div class="modal-title-row">
+          <span class="modal-icon">🔥</span>
+          <span class="modal-title">7-Day Daily Streak Rewards</span>
+        </div>
+        <button class="modal-close-btn" id="closeDailyBonusModalBtn">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="streak-header-banner">
+          <div class="streak-badge" id="modalStreakCount">🔥 DAY 1 STREAK</div>
+          <div class="streak-subtitle">Come back every 24 hours to keep your streak alive!</div>
+        </div>
+
+        <!-- 7-Day Grid -->
+        <div class="streak-days-grid" id="streakDaysGrid">
+          <!-- Day 1 -->
+          <div class="streak-day-cell" data-day="1">
+            <div class="cell-day">Day 1</div>
+            <div class="cell-icon">💵</div>
+            <div class="cell-amount">$100</div>
+            <div class="cell-status">CLAIMABLE</div>
+          </div>
+          <!-- Day 2 -->
+          <div class="streak-day-cell" data-day="2">
+            <div class="cell-day">Day 2</div>
+            <div class="cell-icon">💵</div>
+            <div class="cell-amount">$250</div>
+            <div class="cell-status">LOCKED</div>
+          </div>
+          <!-- Day 3 -->
+          <div class="streak-day-cell" data-day="3">
+            <div class="cell-day">Day 3</div>
+            <div class="cell-icon">💵</div>
+            <div class="cell-amount">$500</div>
+            <div class="cell-status">LOCKED</div>
+          </div>
+          <!-- Day 4 -->
+          <div class="streak-day-cell" data-day="4">
+            <div class="cell-day">Day 4</div>
+            <div class="cell-icon">💰</div>
+            <div class="cell-amount">$1,000</div>
+            <div class="cell-status">LOCKED</div>
+          </div>
+          <!-- Day 5 -->
+          <div class="streak-day-cell" data-day="5">
+            <div class="cell-day">Day 5</div>
+            <div class="cell-icon">💰</div>
+            <div class="cell-amount">$2,500</div>
+            <div class="cell-status">LOCKED</div>
+          </div>
+          <!-- Day 6 -->
+          <div class="streak-day-cell" data-day="6">
+            <div class="cell-day">Day 6</div>
+            <div class="cell-icon">💎</div>
+            <div class="cell-amount">$5,000</div>
+            <div class="cell-status">LOCKED</div>
+          </div>
+          <!-- Day 7 Jackpot -->
+          <div class="streak-day-cell cell-jackpot" data-day="7">
+            <div class="cell-day">Day 7 👑</div>
+            <div class="cell-icon">🎁</div>
+            <div class="cell-amount">$10,000</div>
+            <div class="cell-status">+ LUCKY SPIN!</div>
+          </div>
+        </div>
+
+        <div class="streak-action-area">
+          <button class="modal-action-btn btn-gold pulse-btn" id="claimDailyRewardBtn">CLAIM TODAY'S REWARD</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- 8. LEVEL-UP CELEBRATION MODAL                                    -->
+  <!-- ================================================================= -->
+  <div class="modal-overlay" id="levelUpModal">
+    <div class="modal-card modal-celebrate">
+      <div class="celebrate-badge-anim">🏆</div>
+      <h2 class="celebrate-title">LEVEL UP!</h2>
+      <div class="celebrate-level-num" id="levelUpModalNumber">LEVEL 2</div>
+      <p class="celebrate-desc">Congratulations! You've unlocked new rewards & higher rakeback.</p>
+      
+      <div class="celebrate-reward-box">
+        <div class="reward-label">LEVEL-UP CASH BONUS</div>
+        <div class="reward-val text-green" id="levelUpModalReward">+$100.00 FREE CHIPS</div>
+      </div>
+
+      <button class="modal-action-btn btn-green" id="closeLevelUpModalBtn">CLAIM & CONTINUE</button>
+    </div>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- 9. FREE REFILL & DEPOSIT MODAL                                   -->
+  <!-- ================================================================= -->
+  <div class="modal-overlay" id="depositModal">
+    <div class="modal-card modal-deposit">
+      <div class="modal-header">
+        <div class="modal-title-row">
+          <span class="modal-icon">💵</span>
+          <span class="modal-title">Instant Free Reload Faucet</span>
+        </div>
+        <button class="modal-close-btn" id="closeDepositModalBtn">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-desc">This is a 100% free simulated crypto casino. Choose your reload amount below to instantly top up your wallet.</p>
+
+        <div class="deposit-options-grid">
+          <button class="deposit-chip-btn" data-amount="1000">
+            <span class="chip-val">+$1,000</span>
+            <span class="chip-label">Starter Reload</span>
+          </button>
+          <button class="deposit-chip-btn" data-amount="5000">
+            <span class="chip-val">+$5,000</span>
+            <span class="chip-label">Pro Player</span>
+          </button>
+          <button class="deposit-chip-btn" data-amount="25000">
+            <span class="chip-val">+$25,000</span>
+            <span class="chip-label">High Roller</span>
+          </button>
+          <button class="deposit-chip-btn" data-amount="100000">
+            <span class="chip-val">+$100,000</span>
+            <span class="chip-label">Whale Stack</span>
+          </button>
+        </div>
+
+        <div class="deposit-crypto-selector">
+          <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">SIMULATED WALLET CURRENCY</label>
+          <div class="crypto-currency-strip">
+            <button class="crypto-curr-btn active" data-curr="USD">💵 USD</button>
+            <button class="crypto-curr-btn" data-curr="BTC">₿ BTC</button>
+            <button class="crypto-curr-btn" data-curr="ETH">Ξ ETH</button>
+            <button class="crypto-curr-btn" data-curr="USDT">₮ USDT</button>
+            <button class="crypto-curr-btn" data-curr="LTC">Ł LTC</button>
+          </div>
+        </div>
+
+        <button class="modal-action-btn btn-green" id="confirmDepositBtn">RELOAD WALLET</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- 10. GAME RULES & PAYTABLE MODAL                                  -->
+  <!-- ================================================================= -->
+  <div class="modal-overlay" id="gameRulesModal">
+    <div class="modal-card modal-rules">
+      <div class="modal-header">
+        <div class="modal-title-row">
+          <span class="modal-icon">ℹ️</span>
+          <span class="modal-title" id="rulesModalTitle">Game Rules & Paytable</span>
+        </div>
+        <button class="modal-close-btn" id="closeRulesModalBtn">✕</button>
+      </div>
+
+      <div class="modal-body" id="rulesModalBody">
+        <!-- Dynamically injected rules per active game -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- 11. NEXT-GEN PROVABLY FAIR VERIFICATION MODAL                     -->
+  <!-- ================================================================= -->
+  <div class="modal-overlay" id="provablyFairModal">
+    <div class="modal-card modal-provably-fair">
+      <div class="modal-header">
+        <div class="modal-title-row">
+          <span class="modal-icon">🛡️</span>
+          <div>
+            <div class="modal-title">Provably Fair Verification</div>
+            <div class="modal-sub">HMAC-SHA256 Cryptographic System</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeFairModalBtn">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="pf-info-banner">
+          Every game outcome is mathematically predetermined and completely tamper-proof. You can verify every single spin, roll, crash, and drop in real time.
+        </div>
+
+        <div class="pf-seeds-section">
+          <!-- Active Server Seed Hash -->
+          <div class="pf-field-group">
+            <div class="pf-field-label">
+              <span>ACTIVE SERVER SEED (SHA-256 HASH)</span>
+              <span class="badge-locked">LOCKED & UNALTERABLE</span>
+            </div>
+            <div class="pf-input-copy-wrap">
+              <input type="text" class="pf-input" id="pfServerSeedHash" readonly>
+              <button class="pf-copy-btn" id="pfCopyServerBtn" title="Copy Hash">📋</button>
+            </div>
+          </div>
+
+          <!-- Active Client Seed -->
+          <div class="pf-field-group">
+            <div class="pf-field-label">
+              <span>CLIENT SEED (YOUR CUSTOM ENTROPY)</span>
+              <button class="pf-text-action" id="pfRandomizeClientBtn">🎲 Randomize</button>
+            </div>
+            <div class="pf-input-copy-wrap">
+              <input type="text" class="pf-input" id="pfClientSeedInput" placeholder="Enter custom seed...">
+              <button class="pf-copy-btn" id="pfSaveClientBtn" title="Update Client Seed">SAVE</button>
+            </div>
+          </div>
+
+          <!-- Active Nonce Counter -->
+          <div class="pf-field-group">
+            <div class="pf-field-label">
+              <span>NONCE (BET COUNT)</span>
+              <span class="pf-nonce-badge" id="pfNonceBadge">Nonce #1</span>
+            </div>
+            <input type="number" class="pf-input" id="pfNonceInput" value="1" min="1">
+          </div>
+        </div>
+
+        <!-- Real-Time Outcome Calculator -->
+        <div class="pf-calculator-card">
+          <div class="pf-calc-header">
+            <span class="calc-icon">⚡</span>
+            <span class="calc-title">Live Outcome Calculator & Verifier</span>
+          </div>
+
+          <div class="pf-calc-grid">
+            <div class="pf-calc-col">
+              <label>Select Game</label>
+              <select class="pf-select" id="pfVerifyGameSelect">
+                <option value="crash">Crash Rocket</option>
+                <option value="plinko">Plinko 1000x</option>
+                <option value="dice">Classic Dice</option>
+                <option value="mines">Mines Multiplier</option>
+                <option value="roulette">European Roulette</option>
+                <option value="blackjack">Blackjack 3:2</option>
+                <option value="lightning">Lightning Link</option>
+                <option value="olympus">Gates of Olympus</option>
+              </select>
+            </div>
+            <div class="pf-calc-col">
+              <label>Verification Action</label>
+              <button class="pf-calc-btn" id="pfRunVerifyBtn">VERIFY OUTCOME</button>
+            </div>
+          </div>
+
+          <div class="pf-calc-result" id="pfCalcResult" style="display: none;">
+            <div class="result-row">
+              <span class="result-label">Computed HMAC-SHA256:</span>
+              <span class="result-hash" id="pfResultHash">00000000...</span>
+            </div>
+            <div class="result-row">
+              <span class="result-label">Normalized Float:</span>
+              <span class="result-float" id="pfResultFloat">0.000000</span>
+            </div>
+            <div class="result-row result-highlight">
+              <span class="result-label">Cryptographic Outcome:</span>
+              <span class="result-outcome" id="pfResultOutcome">1.98x Multiplier</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rotate Seed Pair Button -->
+        <button class="modal-action-btn btn-cyan" id="pfRotateSeedBtn">ROTATE NEW SEED PAIR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts in dependency order -->
+  <script src="js/audio.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/celebration.js"></script>
+  <script src="js/symbols.js"></script>
+  <script src="js/games/plinko.js"></script>
+  <script src="js/games/crash.js"></script>
+  <script src="js/games/blackjack.js"></script>
+  <script src="js/games/poker.js"></script>
+  <script src="js/games/roulette.js"></script>
+  <script src="js/games/baccarat.js"></script>
+  <script src="js/games/mines.js"></script>
+  <script src="js/games/dice.js"></script>
+  <script src="js/games/limbo.js"></script>
+  <script src="js/games/hilo.js"></script>
+  <script src="js/games/lightning.js"></script>
+  <script src="js/games/olympus.js"></script>
+  <script src="js/games/slots.js"></script>
+  <script src="js/games/cases.js"></script>
+  <script src="js/rain.js"></script>
+  <script src="js/rewards.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
