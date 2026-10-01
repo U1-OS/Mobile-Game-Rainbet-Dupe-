@@ -4,3 +4,7 @@ Thumbs.db
 .env
 .idea/
 .vscode/
+
+screen_*.png
+game_*.png
+test_*.png

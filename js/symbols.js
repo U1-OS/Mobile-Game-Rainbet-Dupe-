@@ -1677,6 +1677,275 @@ class CasinoSymbols {
         return `<div class="poster-fallback-art">🎰</div>`;
     }
   }
+
+  // ==========================================
+  // REAL-LIFE 3D CASINO CHIP RENDERER
+  // ==========================================
+  static renderRealCasinoChip(val, isSelected = false, size = 44) {
+    const v = parseInt(val, 10) || 1;
+    let mainColor = '#ffffff';
+    let stripeColor = '#0284c7';
+    let textColor = '#0f172a';
+    let ringColor = '#ca8a04';
+    let label = '$' + v;
+
+    if (v === 1) {
+      mainColor = '#f8fafc';
+      stripeColor = '#0ea5e9';
+      textColor = '#0369a1';
+      ringColor = '#38bdf8';
+    } else if (v === 5) {
+      mainColor = '#dc2626';
+      stripeColor = '#ffffff';
+      textColor = '#ffffff';
+      ringColor = '#fca5a5';
+    } else if (v === 10) {
+      mainColor = '#2563eb';
+      stripeColor = '#fbbf24';
+      textColor = '#ffffff';
+      ringColor = '#93c5fd';
+    } else if (v === 25) {
+      mainColor = '#16a34a';
+      stripeColor = '#fef08a';
+      textColor = '#ffffff';
+      ringColor = '#86efac';
+    } else if (v === 50) {
+      mainColor = '#ea580c';
+      stripeColor = '#ffffff';
+      textColor = '#ffffff';
+      ringColor = '#fdba74';
+    } else if (v === 100) {
+      mainColor = '#18181b';
+      stripeColor = '#f59e0b';
+      textColor = '#fef08a';
+      ringColor = '#eab308';
+    } else if (v === 500) {
+      mainColor = '#7e22ce';
+      stripeColor = '#f472b6';
+      textColor = '#ffffff';
+      ringColor = '#d8b4fe';
+    } else if (v >= 1000) {
+      mainColor = '#b45309';
+      stripeColor = '#00f0ff';
+      textColor = '#fef08a';
+      ringColor = '#fde047';
+      label = '$' + (v >= 1000 ? (v / 1000) + 'K' : v);
+    }
+
+    const stripes = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map(deg =>
+      `<rect x="47" y="3" width="6" height="11" rx="1.5" fill="${stripeColor}" stroke="rgba(0,0,0,0.3)" stroke-width="0.8" transform="rotate(${deg} 50 50)"/>`
+    ).join('');
+
+    return `
+      <div class="casino-3d-chip ${isSelected ? 'selected' : ''}" data-val="${v}" style="width: ${size}px; height: ${size}px;">
+        <svg viewBox="0 0 100 100" class="chip-svg">
+          <defs>
+            <radialGradient id="chipLight_${v}" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35"/>
+              <stop offset="70%" stop-color="transparent" stop-opacity="0"/>
+              <stop offset="100%" stop-color="#000000" stop-opacity="0.45"/>
+            </radialGradient>
+            <linearGradient id="goldFoil_${v}" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fef08a"/>
+              <stop offset="50%" stop-color="#ca8a04"/>
+              <stop offset="100%" stop-color="#78350f"/>
+            </linearGradient>
+            <filter id="chipDropShadow_${v}" x="-25%" y="-20%" width="150%" height="150%">
+              <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#000000" flood-opacity="0.7"/>
+            </filter>
+          </defs>
+          <g filter="url(#chipDropShadow_${v})">
+            <!-- Clay Base Circle -->
+            <circle cx="50" cy="50" r="46" fill="${mainColor}" stroke="#0f172a" stroke-width="1.8"/>
+            <!-- 12 Alternating Edge Inserts -->
+            ${stripes}
+            <!-- 3D Bevel Lighting Spherical Overlay -->
+            <circle cx="50" cy="50" r="46" fill="url(#chipLight_${v})"/>
+            <!-- Outer Gold Stamped Ring -->
+            <circle cx="50" cy="50" r="32" fill="none" stroke="url(#goldFoil_${v})" stroke-width="2.5"/>
+            <circle cx="50" cy="50" r="28" fill="none" stroke="${ringColor}" stroke-width="1" stroke-dasharray="2.5 2"/>
+            <!-- Center Denomination Inlay -->
+            <circle cx="50" cy="50" r="25" fill="${v === 1 ? '#e2e8f0' : (v === 100 ? '#09090b' : mainColor)}" stroke="rgba(0,0,0,0.5)" stroke-width="1"/>
+            <circle cx="50" cy="50" r="25" fill="url(#chipLight_${v})"/>
+            <!-- Value Text -->
+            <text x="50" y="55" font-family="'Outfit', 'Inter', sans-serif" font-weight="900" font-size="${label.length > 3 ? '13' : '15'}" fill="${textColor}" text-anchor="middle" dominant-baseline="middle" style="letter-spacing: -0.5px; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.7));">${label}</text>
+          </g>
+        </svg>
+      </div>
+    `;
+  }
+
+  // Chip Stack Display for Active Bets
+  static renderChipStack(amount) {
+    if (!amount || amount <= 0) return '';
+    let rem = amount;
+    const chips = [];
+    const denoms = [1000, 500, 100, 50, 25, 10, 5, 1];
+    for (const d of denoms) {
+      while (rem >= d && chips.length < 5) {
+        chips.push(d);
+        rem -= d;
+      }
+    }
+    if (chips.length === 0) chips.push(1);
+
+    return `
+      <div class="table-chip-stack-wrap">
+        <div class="table-chip-stack">
+          ${chips.map((val, idx) => `
+            <div class="stacked-chip-layer" style="transform: translateY(-${idx * 6}px) scale(0.92); z-index: ${idx + 1};">
+              ${this.renderRealCasinoChip(val, false, 36)}
+            </div>
+          `).join('')}
+        </div>
+        <div class="chip-stack-total-pill">$${amount.toFixed(2)}</div>
+      </div>
+    `;
+  }
+
+  // 3D Casino Dealing Shoe
+  static renderCardShoe(remainingDecks = 6, cardsLeft = 312) {
+    return `
+      <div class="vegas-card-shoe" title="6-Deck Shuffled Casino Shoe">
+        <svg viewBox="0 0 100 65" class="shoe-svg">
+          <defs>
+            <linearGradient id="shoeWood" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#451a03"/>
+              <stop offset="40%" stop-color="#78350f"/>
+              <stop offset="80%" stop-color="#451a03"/>
+              <stop offset="100%" stop-color="#1c0e07"/>
+            </linearGradient>
+            <linearGradient id="shoeAcrylic" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(56, 189, 248, 0.4)"/>
+              <stop offset="60%" stop-color="rgba(14, 165, 233, 0.15)"/>
+              <stop offset="100%" stop-color="rgba(2, 132, 199, 0.3)"/>
+            </linearGradient>
+          </defs>
+          <!-- Wooden Base Wedge -->
+          <polygon points="5,55 95,55 88,18 20,18" fill="url(#shoeWood)" stroke="#1c0e07" stroke-width="1.5"/>
+          <!-- Acrylic Clear Front Plate -->
+          <polygon points="20,18 88,18 80,48 24,48" fill="url(#shoeAcrylic)" stroke="#38bdf8" stroke-width="1"/>
+          <!-- Cards Stack Inside -->
+          <rect x="26" y="22" width="50" height="22" rx="2" fill="#ffffff" stroke="#94a3b8" stroke-width="0.8"/>
+          <line x1="28" y1="26" x2="74" y2="26" stroke="#e2e8f0" stroke-width="1"/>
+          <line x1="28" y1="30" x2="74" y2="30" stroke="#e2e8f0" stroke-width="1"/>
+          <line x1="28" y1="34" x2="74" y2="34" stroke="#e2e8f0" stroke-width="1"/>
+          <!-- Red Plastic Cut Card -->
+          <polygon points="74,16 78,16 74,48 70,48" fill="#dc2626" stroke="#991b1b" stroke-width="0.8"/>
+          <!-- Steel Roller -->
+          <rect x="78" y="24" width="8" height="24" rx="3" fill="#cbd5e1" stroke="#475569" stroke-width="1"/>
+          <!-- Gold Plaque -->
+          <rect x="30" y="52" width="40" height="10" rx="2" fill="#f59e0b" stroke="#78350f" stroke-width="0.8"/>
+          <text x="50" y="59" font-family="'Outfit', sans-serif" font-weight="900" font-size="6.5" fill="#451a03" text-anchor="middle">SHOE: ${cardsLeft}</text>
+        </svg>
+      </div>
+    `;
+  }
+
+  // Realistic Poker Community Card Slot Placeholder with Gold Leaf Filigree
+  static renderCardSlotPlaceholder(label, suitSymbol = '♠') {
+    return `
+      <div class="lux-card-slot">
+        <div class="slot-inner-border">
+          <span class="slot-suit-watermark">${suitSymbol}</span>
+          <span class="slot-label-gold">${label}</span>
+          <div class="slot-corner-filigree top-left"></div>
+          <div class="slot-corner-filigree bottom-right"></div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Full Majestic Zeus Figure for Gates of Olympus
+  static renderZeusFullFigure() {
+    return `
+      <div class="zeus-olympus-figure">
+        <svg viewBox="0 0 140 180" class="zeus-svg">
+          <defs>
+            <radialGradient id="zeusEyeGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="40%" stop-color="#00f0ff"/>
+              <stop offset="100%" stop-color="transparent"/>
+            </radialGradient>
+            <linearGradient id="zeusArmorGold" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fffbeb"/>
+              <stop offset="30%" stop-color="#fbbf24"/>
+              <stop offset="70%" stop-color="#d97706"/>
+              <stop offset="100%" stop-color="#78350f"/>
+            </linearGradient>
+            <linearGradient id="zeusTogaWhite" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="60%" stop-color="#e2e8f0"/>
+              <stop offset="100%" stop-color="#94a3b8"/>
+            </linearGradient>
+            <radialGradient id="lightningBoltGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="50%" stop-color="#00f0ff"/>
+              <stop offset="100%" stop-color="#3b82f6"/>
+            </radialGradient>
+            <filter id="zeusGlowFilter" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#00f0ff" flood-opacity="0.8"/>
+            </filter>
+          </defs>
+
+          <!-- Electric Aura Wings Background -->
+          <g filter="url(#zeusGlowFilter)" opacity="0.6">
+            <path d="M70,30 C30,10 10,50 15,110 C25,75 50,60 70,65 Z" fill="#00f0ff" opacity="0.3"/>
+            <path d="M70,30 C110,10 130,50 125,110 C115,75 90,60 70,65 Z" fill="#00f0ff" opacity="0.3"/>
+          </g>
+
+          <!-- Flowing White Cape / Toga -->
+          <path d="M40,55 Q10,100 20,165 Q70,180 120,165 Q130,100 100,55 Z" fill="url(#zeusTogaWhite)" stroke="#64748b" stroke-width="1.5"/>
+          <path d="M35,65 Q50,110 40,160 M95,65 Q85,110 95,160" stroke="#cbd5e1" stroke-width="2" fill="none"/>
+
+          <!-- Golden Armor Cuirass / Gauntlets -->
+          <path d="M48,55 L92,55 L88,95 L52,95 Z" fill="url(#zeusArmorGold)" stroke="#78350f" stroke-width="1.8"/>
+          <!-- Greek Meander Belt -->
+          <rect x="46" y="95" width="48" height="8" rx="2" fill="#d97706" stroke="#78350f" stroke-width="1"/>
+          <path d="M48,99 H92 M52,95 V103 M60,95 V103 M68,95 V103 M76,95 V103 M84,95 V103" stroke="#fef08a" stroke-width="1"/>
+
+          <!-- Muscular Neck & Head Base -->
+          <rect x="62" y="38" width="16" height="20" rx="4" fill="#f8fafc"/>
+          <ellipse cx="70" cy="38" rx="18" ry="22" fill="#f8fafc"/>
+
+          <!-- Chiseled Olympian Features -->
+          <!-- Flowing Majestic White Beard -->
+          <path d="M52,38 C42,65 52,90 70,96 C88,90 98,65 88,38 C80,48 60,48 52,38 Z" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.2"/>
+          <path d="M60,54 Q70,72 80,54 M65,60 Q70,82 75,60" stroke="#94a3b8" stroke-width="1.2" fill="none"/>
+
+          <!-- Moustache -->
+          <path d="M54,42 Q70,48 70,44 Q70,48 86,42 Q70,39 54,42 Z" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1"/>
+
+          <!-- Glowing Cyan Lightning Eyes -->
+          <ellipse cx="62" cy="33" rx="4.5" ry="3" fill="#000000"/>
+          <circle cx="62" cy="33" r="3" fill="url(#zeusEyeGlow)"/>
+          <circle cx="62" cy="33" r="1.2" fill="#ffffff"/>
+
+          <ellipse cx="78" cy="33" rx="4.5" ry="3" fill="#000000"/>
+          <circle cx="78" cy="33" r="3" fill="url(#zeusEyeGlow)"/>
+          <circle cx="78" cy="33" r="1.2" fill="#ffffff"/>
+
+          <!-- Golden Laurel Leaf Diadem / Crown -->
+          <path d="M48,22 Q70,10 92,22 L88,27 Q70,18 52,27 Z" fill="url(#zeusArmorGold)" stroke="#78350f" stroke-width="1.5"/>
+          <polygon points="70,6 74,18 66,18" fill="#fef08a"/>
+          <polygon points="56,12 62,20 54,22" fill="#fef08a"/>
+          <polygon points="84,12 78,20 86,22" fill="#fef08a"/>
+
+          <!-- Hand Holding Crackling Triple Lightning Bolt -->
+          <!-- Golden Arm Gauntlet -->
+          <path d="M92,70 L115,75 L118,65 L95,60 Z" fill="url(#zeusArmorGold)" stroke="#78350f" stroke-width="1.5"/>
+          <!-- Fisted Hand -->
+          <circle cx="118" cy="70" r="7" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/>
+          <!-- Massive Crackling Lightning Bolt -->
+          <g filter="url(#zeusGlowFilter)">
+            <polygon points="120,20 126,55 118,60 134,68 116,80 122,86 102,120 114,84 104,82 118,72 106,62 116,56" fill="url(#lightningBoltGlow)" stroke="#ffffff" stroke-width="1.5"/>
+            <!-- Energy Arcs -->
+            <path d="M124,35 Q135,45 128,60 M110,75 Q100,90 108,105" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+    `;
+  }
 }
 
 // Renderer Registry Map

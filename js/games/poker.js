@@ -26,14 +26,23 @@ class PokerGame {
   }
 
   renderUI() {
+    const sym = window.CasinoSymbols;
     this.container.innerHTML = `
       <div class="poker-table-felt">
         <!-- Felt Rail & Header Banner -->
         <div class="poker-felt-header">
-          <span class="poker-felt-title">TEXAS HOLD'EM POKER • CASINO RULES</span>
+          <div class="poker-title-wrap">
+            <span class="poker-felt-title">★ TEXAS HOLD'EM • CASINO RULES ★</span>
+            <span class="poker-sub-note">Flop • Turn • River • Dealer Qualifies with Pair of 4s+</span>
+          </div>
           <div class="poker-pot-badge">
-            <span class="pot-label">POT:</span>
-            <span class="pot-val text-gold" id="pokerPotDisplay">$0.00</span>
+            <div class="pot-title-row">
+              <span class="pot-label">TOTAL POT:</span>
+              <span class="pot-val text-gold" id="pokerPotDisplay">$0.00</span>
+            </div>
+            <div class="poker-pot-chips" id="pokerPotChips">
+              ${sym ? sym.renderChipStack(0) : ''}
+            </div>
           </div>
         </div>
 
@@ -42,26 +51,27 @@ class PokerGame {
           <div class="poker-label-row">
             <div class="dealer-title-wrap">
               <span class="poker-actor-name">DEALER</span>
-              <span class="poker-qualify-note">(Qualifies with Pair of 4s+)</span>
+              <span class="poker-qualify-note">(Pair of 4s or Better to Qualify)</span>
             </div>
             <span class="poker-hand-name" id="pokerDealerHandName">--</span>
           </div>
-          <div class="poker-cards-row" id="pokerDealerCards"></div>
+          <div class="poker-cards-row" id="pokerDealerCards">
+            ${sym ? sym.renderCardSlotPlaceholder('DEALER 1', '♦') + sym.renderCardSlotPlaceholder('DEALER 2', '♣') : ''}
+          </div>
         </div>
 
         <!-- Community Board: Flop, Turn, River -->
         <div class="poker-community-box">
           <div class="community-header-row">
-            <span class="community-label">COMMUNITY BOARD</span>
+            <span class="community-label">★ COMMUNITY BOARD ★</span>
             <span class="community-stage-indicator" id="pokerBoardStage">PRE-FLOP</span>
           </div>
           <div class="poker-board-cards" id="pokerCommunityCards">
-            <!-- 5 slots -->
-            <div class="card-slot-placeholder">FLOP</div>
-            <div class="card-slot-placeholder">FLOP</div>
-            <div class="card-slot-placeholder">FLOP</div>
-            <div class="card-slot-placeholder">TURN</div>
-            <div class="card-slot-placeholder">RIVER</div>
+            ${sym ? sym.renderCardSlotPlaceholder('FLOP 1', '♠') : '<div class="card-slot-placeholder">FLOP 1</div>'}
+            ${sym ? sym.renderCardSlotPlaceholder('FLOP 2', '♥') : '<div class="card-slot-placeholder">FLOP 2</div>'}
+            ${sym ? sym.renderCardSlotPlaceholder('FLOP 3', '♦') : '<div class="card-slot-placeholder">FLOP 3</div>'}
+            ${sym ? sym.renderCardSlotPlaceholder('TURN', '♣') : '<div class="card-slot-placeholder">TURN</div>'}
+            ${sym ? sym.renderCardSlotPlaceholder('RIVER', '♠') : '<div class="card-slot-placeholder">RIVER</div>'}
           </div>
         </div>
 
@@ -69,9 +79,11 @@ class PokerGame {
         <div class="poker-hand-box player-box">
           <div class="poker-label-row">
             <span class="poker-actor-name">YOUR HOLE CARDS</span>
-            <span class="poker-hand-name text-gold" id="pokerPlayerHandName">Place Bet to Deal</span>
+            <span class="poker-hand-name text-gold" id="pokerPlayerHandName">Select Ante & Deal</span>
           </div>
-          <div class="poker-cards-row" id="pokerPlayerCards"></div>
+          <div class="poker-cards-row" id="pokerPlayerCards">
+            ${sym ? sym.renderCardSlotPlaceholder('HOLE 1', '♠') + sym.renderCardSlotPlaceholder('HOLE 2', '♥') : ''}
+          </div>
         </div>
 
         <!-- AA Bonus Side Bet Box -->
@@ -80,10 +92,35 @@ class PokerGame {
             <span class="aa-icon">⭐</span>
             <div class="aa-text">
               <span class="aa-title">AA BONUS SIDE BET</span>
-              <span class="aa-payout">Pair of Aces or Better (Pays up to 100:1)</span>
+              <span class="aa-payout">Pair of Aces or Better in Hole / Flop (Pays up to 100:1)</span>
             </div>
             <span class="aa-status" id="aaBonusStatus">OFF</span>
           </button>
+        </div>
+
+        <!-- Real 3D Chips Tray for Poker Ante -->
+        <div class="poker-chip-bar" id="pokerChipBar">
+          <div class="chip-bar-header">
+            <span class="chip-bar-label">SELECT ANTE CHIP:</span>
+            <span class="poker-ante-tag" id="pokerActiveAnteTag">ANTE: $10.00</span>
+          </div>
+          <div class="chip-buttons-strip">
+            <button class="poker-chip-btn" data-val="5" title="$5 Ante">
+              ${sym ? sym.renderRealCasinoChip(5, false, 40) : '$5'}
+            </button>
+            <button class="poker-chip-btn active" data-val="10" title="$10 Ante">
+              ${sym ? sym.renderRealCasinoChip(10, true, 40) : '$10'}
+            </button>
+            <button class="poker-chip-btn" data-val="25" title="$25 Ante">
+              ${sym ? sym.renderRealCasinoChip(25, false, 40) : '$25'}
+            </button>
+            <button class="poker-chip-btn" data-val="50" title="$50 Ante">
+              ${sym ? sym.renderRealCasinoChip(50, false, 40) : '$50'}
+            </button>
+            <button class="poker-chip-btn" data-val="100" title="$100 Ante">
+              ${sym ? sym.renderRealCasinoChip(100, false, 40) : '$100'}
+            </button>
+          </div>
         </div>
 
         <!-- Showdown Result Banner -->
@@ -109,6 +146,7 @@ class PokerGame {
     this.playerHandNameEl = document.getElementById('pokerPlayerHandName');
     this.boardStageEl = document.getElementById('pokerBoardStage');
     this.potDisplayEl = document.getElementById('pokerPotDisplay');
+    this.potChipsEl = document.getElementById('pokerPotChips');
     this.aaToggleBtn = document.getElementById('aaBonusToggleBtn');
     this.aaStatusEl = document.getElementById('aaBonusStatus');
     this.actionsBar = document.getElementById('pokerActionsBar');
@@ -119,6 +157,7 @@ class PokerGame {
     this.resultTitle = document.getElementById('pokerResultTitle');
     this.resultAmount = document.getElementById('pokerResultAmount');
     this.resultDetail = document.getElementById('pokerResultDetail');
+    this.activeAnteTagEl = document.getElementById('pokerActiveAnteTag');
 
     this.bindEvents();
     this.initDeck();
@@ -137,6 +176,37 @@ class PokerGame {
       this.aaStatusEl.style.color = this.aaBonusSelected ? '#00e701' : 'var(--text-muted)';
       if (window.soundFX) window.soundFX.playChipClink();
     });
+
+    // 3D Chip Ante selector
+    const chipBtns = this.container.querySelectorAll('.poker-chip-btn');
+    chipBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        chipBtns.forEach(b => {
+          b.classList.remove('active');
+          const chipInner = b.querySelector('.casino-3d-chip');
+          if (chipInner) chipInner.classList.remove('selected');
+        });
+        btn.classList.add('active');
+        const activeChipInner = btn.querySelector('.casino-3d-chip');
+        if (activeChipInner) activeChipInner.classList.add('selected');
+
+        const val = parseFloat(btn.dataset.val);
+        const betInput = document.getElementById('unifiedBetInput');
+        if (betInput) {
+          betInput.value = val.toFixed(2);
+          betInput.dispatchEvent(new Event('input'));
+        }
+        if (this.activeAnteTagEl) this.activeAnteTagEl.textContent = `ANTE: $${val.toFixed(2)}`;
+        if (window.soundFX) window.soundFX.playChipClink();
+      });
+    });
+  }
+
+  updatePot(amount) {
+    if (this.potDisplayEl) this.potDisplayEl.textContent = `$${amount.toFixed(2)}`;
+    if (this.potChipsEl && window.CasinoSymbols) {
+      this.potChipsEl.innerHTML = window.CasinoSymbols.renderChipStack(amount);
+    }
   }
 
   initDeck() {
@@ -213,7 +283,7 @@ class PokerGame {
     this.resultBanner.style.display = 'none';
     this.actionsBar.style.display = 'none';
     this.boardStageEl.textContent = 'DEALING...';
-    this.potDisplayEl.textContent = `$${(this.anteBet + this.aaBonusBet).toFixed(2)}`;
+    this.updatePot(this.anteBet + this.aaBonusBet);
 
     this.initDeck();
 
@@ -273,7 +343,7 @@ class PokerGame {
 
     this.callBet = betCost;
     this.actionsBar.style.display = 'none';
-    this.potDisplayEl.textContent = `$${(this.anteBet + this.callBet + this.aaBonusBet).toFixed(2)}`;
+    this.updatePot(this.anteBet + this.callBet + this.aaBonusBet);
 
     if (window.soundFX) window.soundFX.playChipClink();
 

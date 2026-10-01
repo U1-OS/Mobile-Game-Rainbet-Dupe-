@@ -143,11 +143,11 @@ class LightningLinkGame {
 
         <!-- Quick Slot Toggles Strip: Buy Hold & Spin, Free Games, Turbo, Auto -->
         <div class="slots-quick-tools">
-          <button class="slot-tool-btn btn-buy-bonus" id="llBuyHoldSpinBtn">
+          <button class="slot-tool-btn btn-buy-holdspin" id="llBuyHoldSpinBtn">
             <span class="tool-icon">🌕</span>
             <span class="tool-label">BUY HOLD & SPIN (60×)</span>
           </button>
-          <button class="slot-tool-btn btn-buy-bonus" id="llBuyFreeGamesBtn" style="border-color: #f97316;">
+          <button class="slot-tool-btn btn-buy-megagames" id="llBuyFreeGamesBtn">
             <span class="tool-icon">🌋</span>
             <span class="tool-label">BUY GIANT 3×3 (80×)</span>
           </button>

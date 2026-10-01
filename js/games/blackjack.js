@@ -27,24 +27,46 @@ class BlackjackGame {
   }
 
   renderUI() {
+    const sym = window.CasinoSymbols;
     this.container.innerHTML = `
       <div class="blackjack-table-felt">
-        <!-- Authentic Vegas Felt Markings -->
+        <!-- Padded Table Rail & Felt Markings -->
         <div class="bj-felt-arc-container">
-          <div class="bj-felt-banner">BLACKJACK PAYS 3 TO 2</div>
-          <div class="bj-felt-sub-banner">Dealer must draw to 16 and stand on all 17s • Insurance pays 2 to 1</div>
+          <div class="bj-felt-banner">★ BLACKJACK PAYS 3 TO 2 ★</div>
+          <div class="bj-felt-sub-banner">Dealer Must Draw to 16 and Stand on all 17s • Insurance Pays 2 to 1</div>
         </div>
 
-        <!-- Dealer Hand Area -->
+        <!-- Dealer Hand Area with 3D Dealing Shoe -->
         <div class="bj-hand-section dealer-section">
           <div class="bj-hand-header">
             <div class="bj-actor-label-wrap">
               <span class="bj-actor-label">DEALER</span>
               <span class="bj-shoe-info" id="bjShoeCount">Shoe: 312</span>
             </div>
-            <span class="bj-score-badge" id="bjDealerScore">0</span>
+            <div class="bj-header-right">
+              <div class="bj-shoe-graphic" id="bjShoeGraphic">
+                ${sym ? sym.renderCardShoe(6, 312) : ''}
+              </div>
+              <span class="bj-score-badge" id="bjDealerScore">0</span>
+            </div>
           </div>
-          <div class="bj-cards-row" id="bjDealerCards"></div>
+          <div class="bj-cards-row" id="bjDealerCards">
+            ${sym ? sym.renderCardSlotPlaceholder('DEALER 1', '♠') + sym.renderCardSlotPlaceholder('DEALER 2', '♥') : ''}
+          </div>
+        </div>
+
+        <!-- Real Vegas In-Felt Betting Circle Spot -->
+        <div class="bj-table-center-zone">
+          <div class="bj-bet-circle-spot" id="bjTableBetSpot" title="Active Wager">
+            <div class="bet-spot-outer-ring">
+              <div class="bet-spot-inner-ring">
+                <span class="bet-spot-label">PLACED BET</span>
+                <div class="bet-spot-chips" id="bjBetSpotChips">
+                  ${sym ? sym.renderChipStack(this.betAmount) : ''}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Insurance Prompt Modal Box (When Dealer shows Ace) -->
@@ -73,7 +95,9 @@ class BlackjackGame {
               </div>
               <span class="bj-score-badge" id="bjPlayerScore0">0</span>
             </div>
-            <div class="bj-cards-row" id="bjPlayerCards0"></div>
+            <div class="bj-cards-row" id="bjPlayerCards0">
+              ${sym ? sym.renderCardSlotPlaceholder('CARD 1', '♦') + sym.renderCardSlotPlaceholder('CARD 2', '♣') : ''}
+            </div>
           </div>
         </div>
 
@@ -81,19 +105,36 @@ class BlackjackGame {
         <div class="bj-actions-bar" id="bjActionsBar" style="display:none;">
           <button class="bj-action-btn btn-hit" id="bjHitBtn">HIT</button>
           <button class="bj-action-btn btn-stand" id="bjStandBtn">STAND</button>
-          <button class="bj-action-btn btn-double" id="bjDoubleBtn">DOUBLE</button>
+          <button class="bj-action-btn btn-double" id="bjDoubleBtn">DOUBLE (2×)</button>
           <button class="bj-action-btn btn-split" id="bjSplitBtn" style="display:none;">SPLIT</button>
         </div>
 
-        <!-- Felt Chip Denominations Bar -->
+        <!-- Vegas Felt 3D Clay Chip Denominations Bar -->
         <div class="bj-chip-bar" id="bjChipBar">
-          <span class="chip-bar-label">CHIPS:</span>
-          <button class="bj-chip-btn chip-1" data-val="1">$1</button>
-          <button class="bj-chip-btn chip-5" data-val="5">$5</button>
-          <button class="bj-chip-btn chip-25 active" data-val="25">$25</button>
-          <button class="bj-chip-btn chip-100" data-val="100">$100</button>
-          <button class="bj-chip-btn chip-500" data-val="500">$500</button>
-          <button class="bj-clear-chip-btn" id="bjClearBetBtn">CLEAR</button>
+          <div class="chip-bar-header">
+            <span class="chip-bar-label">SELECT CHIP:</span>
+            <button class="bj-clear-chip-btn" id="bjClearBetBtn">RESET</button>
+          </div>
+          <div class="chip-buttons-strip">
+            <button class="bj-chip-btn" data-val="1" title="$1 Chip">
+              ${sym ? sym.renderRealCasinoChip(1, false, 42) : '$1'}
+            </button>
+            <button class="bj-chip-btn" data-val="5" title="$5 Chip">
+              ${sym ? sym.renderRealCasinoChip(5, false, 42) : '$5'}
+            </button>
+            <button class="bj-chip-btn" data-val="10" title="$10 Chip">
+              ${sym ? sym.renderRealCasinoChip(10, false, 42) : '$10'}
+            </button>
+            <button class="bj-chip-btn active" data-val="25" title="$25 Chip">
+              ${sym ? sym.renderRealCasinoChip(25, true, 42) : '$25'}
+            </button>
+            <button class="bj-chip-btn" data-val="100" title="$100 Chip">
+              ${sym ? sym.renderRealCasinoChip(100, false, 42) : '$100'}
+            </button>
+            <button class="bj-chip-btn" data-val="500" title="$500 Chip">
+              ${sym ? sym.renderRealCasinoChip(500, false, 42) : '$500'}
+            </button>
+          </div>
         </div>
       </div>
     `;
@@ -101,6 +142,7 @@ class BlackjackGame {
     this.dealerScoreEl = document.getElementById('bjDealerScore');
     this.dealerCardsEl = document.getElementById('bjDealerCards');
     this.shoeCountEl = document.getElementById('bjShoeCount');
+    this.shoeGraphicEl = document.getElementById('bjShoeGraphic');
     this.playerAreaEl = document.getElementById('bjPlayerArea');
     this.actionsBar = document.getElementById('bjActionsBar');
     this.hitBtn = document.getElementById('bjHitBtn');
@@ -114,6 +156,7 @@ class BlackjackGame {
     this.resultOverlay = document.getElementById('bjResultOverlay');
     this.resultText = document.getElementById('bjResultText');
     this.payoutText = document.getElementById('bjPayoutText');
+    this.betSpotChipsEl = document.getElementById('bjBetSpotChips');
 
     this.bindEvents();
     this.initDeck();
@@ -127,18 +170,27 @@ class BlackjackGame {
     this.insYesBtn.addEventListener('click', () => this.resolveInsurance(true));
     this.insNoBtn.addEventListener('click', () => this.resolveInsurance(false));
 
-    // Chip denomination selection
+    // Chip denomination selection with 3D visual selection state
     const chips = this.container.querySelectorAll('.bj-chip-btn');
     chips.forEach(c => {
       c.addEventListener('click', () => {
-        chips.forEach(ch => ch.classList.remove('active'));
+        chips.forEach(ch => {
+          ch.classList.remove('active');
+          const chipInner = ch.querySelector('.casino-3d-chip');
+          if (chipInner) chipInner.classList.remove('selected');
+        });
         c.classList.add('active');
+        const activeChipInner = c.querySelector('.casino-3d-chip');
+        if (activeChipInner) activeChipInner.classList.add('selected');
+
         this.selectedChipVal = parseFloat(c.dataset.val);
         const betInput = document.getElementById('unifiedBetInput');
         if (betInput) {
           const current = parseFloat(betInput.value) || 0;
-          betInput.value = (current + this.selectedChipVal).toFixed(2);
+          const nextVal = (current + this.selectedChipVal).toFixed(2);
+          betInput.value = nextVal;
           betInput.dispatchEvent(new Event('input'));
+          this.updateBetSpot(parseFloat(nextVal));
         }
         if (window.soundFX) window.soundFX.playChipClink();
       });
@@ -151,9 +203,16 @@ class BlackjackGame {
         if (betInput) {
           betInput.value = '10.00';
           betInput.dispatchEvent(new Event('input'));
+          this.updateBetSpot(10.00);
         }
         if (window.soundFX) window.soundFX.playClick();
       });
+    }
+  }
+
+  updateBetSpot(amount) {
+    if (this.betSpotChipsEl && window.CasinoSymbols) {
+      this.betSpotChipsEl.innerHTML = window.CasinoSymbols.renderChipStack(amount);
     }
   }
 
@@ -183,6 +242,9 @@ class BlackjackGame {
     if (this.deck.length < 25) this.initDeck();
     const card = this.deck.pop();
     if (this.shoeCountEl) this.shoeCountEl.textContent = `Shoe: ${this.deck.length}`;
+    if (this.shoeGraphicEl && window.CasinoSymbols) {
+      this.shoeGraphicEl.innerHTML = window.CasinoSymbols.renderCardShoe(Math.ceil(this.deck.length / 52), this.deck.length);
+    }
     return { ...card, hidden };
   }
 

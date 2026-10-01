@@ -46,15 +46,29 @@ class RouletteGame {
           </div>
         </div>
 
-        <!-- Chip Denomination Selector Strip -->
+        <!-- Real 3D Chip Denomination Selector Strip -->
         <div class="roulette-chip-selector">
-          <button class="felt-chip-btn chip-1" data-val="1">$1</button>
-          <button class="felt-chip-btn chip-5" data-val="5">$5</button>
-          <button class="felt-chip-btn chip-10 active" data-val="10">$10</button>
-          <button class="felt-chip-btn chip-25" data-val="25">$25</button>
-          <button class="felt-chip-btn chip-100" data-val="100">$100</button>
-          <button class="felt-tool-btn" id="rouletteRebetBtn">Rebet</button>
-          <button class="felt-tool-btn" id="rouletteClearBtn">Clear</button>
+          <div class="roulette-chips-strip">
+            <button class="felt-chip-btn" data-val="1" title="$1 Chip">
+              ${window.CasinoSymbols ? window.CasinoSymbols.renderRealCasinoChip(1, false, 36) : '$1'}
+            </button>
+            <button class="felt-chip-btn" data-val="5" title="$5 Chip">
+              ${window.CasinoSymbols ? window.CasinoSymbols.renderRealCasinoChip(5, false, 36) : '$5'}
+            </button>
+            <button class="felt-chip-btn active" data-val="10" title="$10 Chip">
+              ${window.CasinoSymbols ? window.CasinoSymbols.renderRealCasinoChip(10, true, 36) : '$10'}
+            </button>
+            <button class="felt-chip-btn" data-val="25" title="$25 Chip">
+              ${window.CasinoSymbols ? window.CasinoSymbols.renderRealCasinoChip(25, false, 36) : '$25'}
+            </button>
+            <button class="felt-chip-btn" data-val="100" title="$100 Chip">
+              ${window.CasinoSymbols ? window.CasinoSymbols.renderRealCasinoChip(100, false, 36) : '$100'}
+            </button>
+          </div>
+          <div class="roulette-tools-strip">
+            <button class="felt-tool-btn" id="rouletteRebetBtn">REBET</button>
+            <button class="felt-tool-btn" id="rouletteClearBtn">CLEAR</button>
+          </div>
         </div>
 
         <!-- Interactive Felt Grid -->
@@ -145,12 +159,19 @@ class RouletteGame {
   }
 
   bindEvents() {
-    // Chip selection
+    // Chip selection with 3D animation
     const chips = this.container.querySelectorAll('.felt-chip-btn');
     chips.forEach(c => {
       c.addEventListener('click', () => {
-        chips.forEach(ch => ch.classList.remove('active'));
+        chips.forEach(ch => {
+          ch.classList.remove('active');
+          const inner = ch.querySelector('.casino-3d-chip');
+          if (inner) inner.classList.remove('selected');
+        });
         c.classList.add('active');
+        const activeInner = c.querySelector('.casino-3d-chip');
+        if (activeInner) activeInner.classList.add('selected');
+
         this.selectedChipVal = parseFloat(c.dataset.val);
         if (window.soundFX) window.soundFX.playChipClink();
       });
@@ -207,10 +228,15 @@ class RouletteGame {
       }
 
       if (amt > 0) {
-        badge.style.display = 'block';
-        badge.textContent = `$${amt}`;
+        badge.style.display = 'flex';
+        if (window.CasinoSymbols) {
+          badge.innerHTML = window.CasinoSymbols.renderRealCasinoChip(amt, false, 24);
+        } else {
+          badge.textContent = `$${amt}`;
+        }
       } else {
         badge.style.display = 'none';
+        badge.innerHTML = '';
       }
     });
 

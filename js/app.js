@@ -252,8 +252,24 @@ class RainStakeApp {
     this.startSimulatedLiveBets();
     this.syncProfileDOM();
 
-    // Default to Lobby view on mobile launch
-    this.showLobby();
+    // Hash-based routing for direct game loading
+    const initialHash = window.location.hash;
+    const match = initialHash.match(/game=([a-z0-9_-]+)/);
+    if (match) {
+      this.openGame(match[1]);
+    } else {
+      this.showLobby();
+    }
+
+    window.addEventListener('hashchange', () => {
+      const h = window.location.hash;
+      const m = h.match(/game=([a-z0-9_-]+)/);
+      if (m) {
+        this.openGame(m[1]);
+      } else if (h === '#lobby' || !h) {
+        this.showLobby();
+      }
+    });
   }
 
   initSplashScreen() {

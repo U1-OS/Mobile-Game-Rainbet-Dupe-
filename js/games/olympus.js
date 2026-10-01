@@ -99,16 +99,19 @@ class GatesOfOlympusGame {
   }
 
   renderUI() {
+    const sym = window.CasinoSymbols;
     this.container.innerHTML = `
       <div class="olympus-cabinet">
         
-        <!-- Top Banner: Zeus Character & Persistent Multiplier Meter -->
+        <!-- Olympian Greek Temple Frieze & Zeus Showcase -->
         <div class="olympus-header-meter">
-          <div class="zeus-character-card">
-            <div class="zeus-avatar-glow" id="olympusZeusAvatar">⚡</div>
+          <div class="zeus-character-showcase">
+            <div class="zeus-full-figure-container" id="olympusZeusFigure">
+              ${sym ? sym.renderZeusFullFigure() : '⚡'}
+            </div>
             <div class="zeus-status-wrap">
-              <span class="zeus-name">ZEUS 1000</span>
-              <span class="zeus-sub" id="olympusZeusStatus">WAITING FOR SCATTERS...</span>
+              <span class="zeus-name">⚡ ZEUS 1000 ⚡</span>
+              <span class="zeus-sub" id="olympusZeusStatus">SCATTERS ANYWHERE (8+)</span>
             </div>
           </div>
           
@@ -120,24 +123,30 @@ class GatesOfOlympusGame {
 
         <!-- Free Spins Banner (Active during feature) -->
         <div class="olympus-fs-banner" id="olympusFsBanner" style="display: ${this.inFreeSpins ? 'flex' : 'none'};">
-          <div class="fs-badge">⚡ FREE SPINS BONUS ⚡</div>
+          <div class="fs-badge">⚡ OLYMPIAN FREE SPINS ⚡</div>
           <div class="fs-count">SPINS LEFT: <span class="text-gold font-bold" id="olympusFsLeft">${this.freeSpinsLeft}</span></div>
           <div class="fs-win">BONUS WIN: <span class="text-green font-bold" id="olympusFsTotalWin">$${this.totalFreeSpinsWin.toFixed(2)}</span></div>
         </div>
 
         <!-- 6x5 Grid Stage with Golden Greek Pillars Frame -->
-        <div class="olympus-grid-frame" id="olympusGridFrame">
-          <div class="olympus-grid-canvas" id="olympusGridCanvas">
-            ${this.renderGridHTML()}
+        <div class="olympus-temple-stage">
+          <div class="temple-pillar pillar-left"></div>
+          <div class="olympus-grid-frame" id="olympusGridFrame">
+            <div class="greek-meander-frieze top-frieze"></div>
+            <div class="olympus-grid-canvas" id="olympusGridCanvas">
+              ${this.renderGridHTML()}
+            </div>
+            <div class="greek-meander-frieze bottom-frieze"></div>
+            <div class="zeus-lightning-flash" id="zeusLightningFlash"></div>
           </div>
-          <div class="zeus-lightning-flash" id="zeusLightningFlash"></div>
+          <div class="temple-pillar pillar-right"></div>
         </div>
 
         <!-- Win & Status Bar -->
         <div class="slots-win-display">
           <div class="win-item">
             <span class="win-label">PAYS</span>
-            <span class="win-val text-cyan">ANYWHERE (8+)</span>
+            <span class="win-val text-cyan">SCATTERS (8+)</span>
           </div>
           <div class="win-item win-highlight-box">
             <span class="win-label">TUMBLE WIN</span>
@@ -151,11 +160,11 @@ class GatesOfOlympusGame {
 
         <!-- Quick Slot Toggles Strip: Buy Bonus (100x), Double Chance Ante, Turbo, Auto -->
         <div class="slots-quick-tools">
-          <button class="slot-tool-btn btn-buy-bonus" id="olympusBuyBonusBtn">
+          <button class="slot-tool-btn btn-buy-bonus-olympus" id="olympusBuyBonusBtn">
             <span class="tool-icon">⚡</span>
-            <span class="tool-label">BUY FREE SPINS (100×)</span>
+            <span class="tool-label">BUY BONUS (100×)</span>
           </button>
-          <button class="slot-tool-btn ${this.anteBetActive ? 'active' : ''}" id="olympusAnteBetBtn">
+          <button class="slot-tool-btn btn-ante-olympus ${this.anteBetActive ? 'active' : ''}" id="olympusAnteBetBtn">
             <span class="tool-icon">🔥</span>
             <span class="tool-label" id="olympusAnteLabel">DOUBLE CHANCE: ${this.anteBetActive ? 'ON' : 'OFF'}</span>
           </button>
