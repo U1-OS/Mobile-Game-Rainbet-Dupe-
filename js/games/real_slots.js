@@ -230,7 +230,10 @@ class BaseRealSlotMachine {
   buyBonus() {
     const cost = this.betAmount * (this.config.bonusCostMult || 100);
     if (!window.appState.deductBet(cost)) {
-      alert(`Insufficient balance to Buy Bonus ($${cost.toFixed(2)} needed). Use Faucet!`);
+      if (window.soundFX) window.soundFX.playDiceLoss();
+      if (window.app?.showToast) {
+        window.app.showToast(`Insufficient balance ($${cost.toFixed(2)} needed). Claim Faucet!`, 'error');
+      }
       return;
     }
     if (window.soundFX) window.soundFX.playBigWin();

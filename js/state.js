@@ -70,7 +70,7 @@ class StateManager {
         casesOpened: 0
       },
       provablyFair: {
-        clientSeed: 'rainstake-' + Math.random().toString(36).substring(2, 9),
+        clientSeed: 'drubet-' + Math.random().toString(36).substring(2, 9),
         serverSeedHash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
         nonce: 1
       },
@@ -466,7 +466,7 @@ class StateManager {
 
   // Rotate Provably Fair Seeds
   rotateSeed(newClientSeed) {
-    this.data.provablyFair.clientSeed = newClientSeed || ('rainstake-' + Math.random().toString(36).substring(2, 9));
+    this.data.provablyFair.clientSeed = newClientSeed || ('drubet-' + Math.random().toString(36).substring(2, 9));
     this.data.provablyFair.serverSeedHash = Array.from({length: 64}, () => Math.floor(Math.random()*16).toString(16)).join('');
     this.data.provablyFair.nonce = 1;
     this.saveState();

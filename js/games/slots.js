@@ -1,6 +1,6 @@
-// Rain Slots Engine for RainStake Mobile
+// DruBet Crown Slots Engine for DruBet VIP Gaming
 // Real Vegas / Stake / Pragmatic Play style 5x3 Video Slot:
-// 10 Paylines, Wild 7s, Rain Scatter Free Spins with 3X Multiplier,
+// 10 Paylines, Wild 7s, Crown Scatter Free Spins with 3X Multiplier,
 // Buy Bonus Feature (100x), Turbo Spin Mode, Auto Spin,
 // SVG Glowing Payline Traces, Multi-tiered Big Win Overlays, Authentic Audio
 
@@ -8,7 +8,7 @@ const SLOT_SYMBOLS = [
   { id: 'diamond', char: '💎', label: 'DIAMOND', weight: 4, pays: [0, 0, 5, 15, 50], color: '#38bdf8' },
   { id: 'crown', char: '👑', label: 'CROWN', weight: 6, pays: [0, 0, 3, 8, 25], color: '#f59e0b' },
   { id: 'wild', char: '7️⃣', label: 'WILD 7', weight: 5, pays: [0, 0, 4, 10, 30], isWild: true, color: '#ef4444' },
-  { id: 'scatter', char: '🌧️', label: 'RAIN SCATTER', weight: 6, isScatter: true, color: '#00f0ff' },
+  { id: 'scatter', char: '🌧️', label: 'CROWN SCATTER', weight: 6, isScatter: true, color: '#00f0ff' },
   { id: 'bolt', char: '⚡', label: 'THUNDER', weight: 10, pays: [0, 0, 1.5, 4, 12], color: '#eab308' },
   { id: 'bell', char: '🔔', label: 'GOLD BELL', weight: 12, pays: [0, 0, 1, 2.5, 8], color: '#f59e0b' },
   { id: 'clover', char: '🍀', label: 'CLOVER', weight: 15, pays: [0, 0, 0.8, 2, 5], color: '#10b981' },
@@ -58,7 +58,7 @@ class SlotsGame {
         <div class="slots-header-status" id="slotsStatusBanner">
           <div class="slots-branding">
             <span class="slots-logo-icon">🎰</span>
-            <span class="slots-title-text">RAIN SLOTS DELUXE</span>
+            <span class="slots-title-text">DRUBET CROWN SLOTS DELUXE</span>
           </div>
           <div class="slots-bonus-indicator" id="slotsBonusBadge" style="display:none">
             ⚡ FREE SPINS: <span id="slotsFsCount">10</span> (3X MULT)
@@ -152,7 +152,9 @@ class SlotsGame {
 
       if (!window.appState.deductBet(bonusCost)) {
         if (window.soundFX) window.soundFX.playDiceLoss();
-        alert(`Insufficient balance to Buy Bonus ($${bonusCost.toFixed(2)} needed). Use Faucet!`);
+        if (window.app?.showToast) {
+          window.app.showToast(`Insufficient balance ($${bonusCost.toFixed(2)} needed). Claim Faucet!`, 'error');
+        }
         return;
       }
 

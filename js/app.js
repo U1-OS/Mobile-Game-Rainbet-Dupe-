@@ -227,12 +227,12 @@ const GAME_METADATA = {
     `
   },
   slots: {
-    name: 'Rain Crown Slots',
+    name: 'DruBet Crown Slots',
     rtp: '96.50% RTP',
     category: 'slots',
-    provider: 'VIDEO SLOT',
+    provider: 'DRUBET ORIGINAL',
     rules: `
-      <h4>Rain Crown 10-Line Slot Rules</h4>
+      <h4>DruBet Crown 10-Line Slot Rules</h4>
       <ul>
         <li><strong>Paylines:</strong> 10 fixed paylines paying left-to-right across 5 reels and 3 rows.</li>
         <li><strong>Crown Wild:</strong> Substitutes for all regular symbols to form highest winning combination.</li>
@@ -259,7 +259,7 @@ const GAME_METADATA = {
     name: 'Chicken Road',
     rtp: '99.00% RTP',
     category: 'originals',
-    provider: 'RAIN ORIGINAL',
+    provider: 'DRUBET ORIGINAL',
     rules: `
       <h4>Chicken Road Rules</h4>
       <ul>
@@ -289,7 +289,7 @@ const GAME_METADATA = {
     name: 'Plinko 1000x',
     rtp: '99.00% RTP',
     category: 'originals',
-    provider: 'RAIN ORIGINAL',
+    provider: 'DRUBET ORIGINAL',
     rules: `
       <h4>Provably Fair Plinko Rules</h4>
       <ul>
@@ -303,7 +303,7 @@ const GAME_METADATA = {
     name: 'Crash Rocket',
     rtp: '99.00% RTP',
     category: 'originals',
-    provider: 'RAIN ORIGINAL',
+    provider: 'DRUBET ORIGINAL',
     rules: `
       <h4>Crash Rocket Rules</h4>
       <ul>
@@ -317,7 +317,7 @@ const GAME_METADATA = {
     name: 'Mines Multiplier',
     rtp: '99.00% RTP',
     category: 'originals',
-    provider: 'RAIN ORIGINAL',
+    provider: 'DRUBET ORIGINAL',
     rules: `
       <h4>Mines Rules</h4>
       <ul>
@@ -330,7 +330,7 @@ const GAME_METADATA = {
     name: 'Classic Dice',
     rtp: '99.00% RTP',
     category: 'originals',
-    provider: 'RAIN ORIGINAL',
+    provider: 'DRUBET ORIGINAL',
     rules: `
       <h4>Classic Dice Rules</h4>
       <ul>
@@ -342,7 +342,7 @@ const GAME_METADATA = {
     name: 'Limbo Moon',
     rtp: '99.00% RTP',
     category: 'originals',
-    provider: 'RAIN ORIGINAL',
+    provider: 'DRUBET ORIGINAL',
     rules: `
       <h4>Limbo Rules</h4>
       <ul>
@@ -354,7 +354,7 @@ const GAME_METADATA = {
     name: 'Hi-Lo Card Master',
     rtp: '98.50% RTP',
     category: 'originals',
-    provider: 'RAIN ORIGINAL',
+    provider: 'DRUBET ORIGINAL',
     rules: `
       <h4>Hi-Lo Rules</h4>
       <ul>
@@ -432,7 +432,7 @@ class RainStakeApp {
       if (progress <= 100) {
         fill.style.width = progress + '%';
         if (progress === 30) status.textContent = 'Verifying Provably Fair Entropy...';
-        if (progress === 60) status.textContent = 'Loading Vegas & Rain Originals Engines...';
+        if (progress === 60) status.textContent = 'Loading Vegas & DruBet Originals Engines...';
         if (progress === 85) status.textContent = 'Syncing Lightning Link Jackpots & Rain Pool...';
         if (progress >= 100) {
           status.textContent = 'Welcome to DruBet!';
@@ -1824,7 +1824,7 @@ class RainStakeApp {
     const modal = document.getElementById('provablyFairModal');
     const pf = window.appState?.provablyFair || {
       serverSeedHash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
-      clientSeed: 'RainStakeLucky2026',
+      clientSeed: 'DruBetLucky2026',
       nonce: 1
     };
 

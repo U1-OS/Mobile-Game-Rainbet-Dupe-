@@ -1,9 +1,9 @@
-// Texas Hold'em / Casino Hold'em Poker Engine for RainStake Mobile
+// Texas Hold'em / Casino Hold'em Poker Engine for DruBet VIP Gaming
 // Real 7-Card Evaluator (Royal Flush down to High Card),
 // Authentic Vegas/Atlantic City Casino Hold'em rules:
 // Preflop deal, Flop community deal, Turn & River, Dealer qualification (Pair of 4s+),
 // Ante Bonus Payouts, AA Bonus Side Bet (pays up to 100:1 on Aces or better in hole/flop),
-// Card Peeking Animation & Audio Integration
+// Card Peeking Animation & Web Audio Synthesizer Integration
 
 const POKER_RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 const POKER_SUITS = ['♠', '♥', '♦', '♣'];
@@ -32,7 +32,7 @@ class PokerGame {
         <!-- Felt Rail & Header Banner -->
         <div class="poker-felt-header">
           <div class="poker-title-wrap">
-            <span class="poker-felt-title">★ TEXAS HOLD'EM • CASINO RULES ★</span>
+            <span class="poker-felt-title">★ DRUBET TEXAS HOLD'EM • VIP SALON ★</span>
             <span class="poker-sub-note">Flop • Turn • River • Dealer Qualifies with Pair of 4s+</span>
           </div>
           <div class="poker-pot-badge">
@@ -457,8 +457,11 @@ class PokerGame {
     this.resultBanner.className = `poker-result-banner ${won ? 'win' : (push ? 'push' : 'lose')}`;
     this.resultBanner.style.display = 'flex';
 
-    if (won && window.soundFX) {
-      window.soundFX.playCashout();
+    if (won) {
+      if (window.soundFX) window.soundFX.playCashout();
+      if ((playerEval.rankTier >= 4 || mult >= 3) && window.celebration) {
+        window.celebration.triggerConfetti();
+      }
     } else if (!won && !push && window.soundFX) {
       window.soundFX.playDiceLoss();
     }

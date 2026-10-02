@@ -1,7 +1,7 @@
-// European Roulette Engine for RainStake Mobile
+// European Roulette Engine for DruBet VIP Gaming
 // Real 37-number single-zero wheel canvas, interactive felt betting grid,
-// Straight-up (35:1), Outside bets, Chip placement stacks, Rebet button,
-// Deceleration ball physics with fret rattle audio, Hot/Cold statistics
+// Straight-up (35:1), Outside bets, Chip placement stacks, Rebet & 2X Double buttons,
+// Deceleration ball physics with fret rattle audio, Hot/Cold live statistics, Winning spot pulse
 
 const ROULETTE_NUMBERS = [
   0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10,
@@ -23,7 +23,7 @@ class RouletteGame {
     this.wheelAngle = 0;
     this.ballAngle = 0;
     this.ballRadius = 90;
-    this.history = [14, 31, 9, 22, 0, 7, 28];
+    this.history = [14, 31, 9, 22, 0, 7, 28, 17, 3];
 
     this.renderUI();
   }
@@ -31,10 +31,17 @@ class RouletteGame {
   renderUI() {
     this.container.innerHTML = `
       <div class="roulette-table-wrapper">
-        <!-- Hot & Cold Recent Numbers Bar -->
+        <!-- Hot & Cold Recent Numbers Bar & Stats Summary -->
         <div class="roulette-stats-header">
-          <span class="stats-label">HISTORY:</span>
-          <div class="roulette-recent-bar" id="rouletteRecentBar"></div>
+          <div class="roulette-history-row">
+            <span class="stats-label">HISTORY:</span>
+            <div class="roulette-recent-bar" id="rouletteRecentBar"></div>
+          </div>
+          <div class="roulette-analytics-pills" id="rouletteAnalyticsPills">
+            <span class="analytics-pill red-pill" id="rouletteRedPct">RED 48%</span>
+            <span class="analytics-pill black-pill" id="rouletteBlackPct">BLK 48%</span>
+            <span class="analytics-pill zero-pill" id="rouletteZeroPct">ZERO 4%</span>
+          </div>
         </div>
 
         <!-- Animated Wheel Canvas Section -->
@@ -66,8 +73,9 @@ class RouletteGame {
             </button>
           </div>
           <div class="roulette-tools-strip">
-            <button class="felt-tool-btn" id="rouletteRebetBtn">REBET</button>
-            <button class="felt-tool-btn" id="rouletteClearBtn">CLEAR</button>
+            <button class="felt-tool-btn" id="rouletteRebetBtn" title="Repeat Previous Bets">REBET</button>
+            <button class="felt-tool-btn" id="rouletteDoubleBtn" title="Double All Current Bets">2X DOUBLE</button>
+            <button class="felt-tool-btn" id="rouletteClearBtn" title="Clear Bets">CLEAR</button>
           </div>
         </div>
 
@@ -198,11 +206,25 @@ class RouletteGame {
       });
     }
 
+    // Double bets button
+    const doubleBtn = document.getElementById('rouletteDoubleBtn');
+    if (doubleBtn) {
+      doubleBtn.addEventListener('click', () => {
+        if (this.isSpinning) return;
+        for (let betKey in this.placedBets) {
+          this.placedBets[betKey] *= 2;
+        }
+        this.updateFeltChips();
+        if (window.soundFX) window.soundFX.playChipClink();
+      });
+    }
+
     // Felt spots click
     const spots = this.container.querySelectorAll('.felt-spot');
     spots.forEach(s => {
       s.addEventListener('click', () => {
         if (this.isSpinning) return;
+        this.clearWinningHighlights();
         const betType = s.dataset.bet;
         const cur = this.placedBets[betType] || 0;
         this.placedBets[betType] = cur + this.selectedChipVal;
@@ -388,11 +410,41 @@ class RouletteGame {
     }
   }
 
+  clearWinningHighlights() {
+    const spots = this.container.querySelectorAll('.felt-spot');
+    spots.forEach(s => s.classList.remove('felt-spot-winning'));
+  }
+
+  highlightWinningSpots(winningNum, isRed, isZero) {
+    this.clearWinningHighlights();
+    const spots = this.container.querySelectorAll('.felt-spot');
+    spots.forEach(s => {
+      const bet = s.dataset.bet;
+      let won = false;
+      if (bet === winningNum.toString()) won = true;
+      else if (bet === 'red' && isRed) won = true;
+      else if (bet === 'black' && !isRed && !isZero) won = true;
+      else if (bet === 'even' && !isZero && winningNum % 2 === 0) won = true;
+      else if (bet === 'odd' && !isZero && winningNum % 2 !== 0) won = true;
+      else if (bet === '1-18' && winningNum >= 1 && winningNum <= 18) won = true;
+      else if (bet === '19-36' && winningNum >= 19 && winningNum <= 36) won = true;
+      else if (bet === '1st12' && winningNum >= 1 && winningNum <= 12) won = true;
+      else if (bet === '2nd12' && winningNum >= 13 && winningNum <= 24) won = true;
+      else if (bet === '3rd12' && winningNum >= 25 && winningNum <= 36) won = true;
+
+      if (won) {
+        s.classList.add('felt-spot-winning');
+      }
+    });
+  }
+
   spin() {
     if (this.isSpinning) return false;
     const totalBet = Object.values(this.placedBets).reduce((a, b) => a + b, 0);
     if (totalBet <= 0) {
-      alert('Please tap numbers or outside bets to place chips before spinning!');
+      if (window.app && window.app.showToast) {
+        window.app.showToast('⚠️ Tap numbers or outside bets to place chips before spinning!');
+      }
       return false;
     }
 
@@ -401,6 +453,7 @@ class RouletteGame {
       return false;
     }
 
+    this.clearWinningHighlights();
     this.previousBets = { ...this.placedBets };
     this.isSpinning = true;
     this.centerResult.style.display = 'none';
@@ -490,6 +543,9 @@ class RouletteGame {
     const mult = totalBet > 0 ? (totalPayout / totalBet) : 0;
     window.appState.recordOutcome('Roulette', totalBet, mult, totalPayout);
 
+    // Highlight winning spots on the felt grid
+    this.highlightWinningSpots(winningNum, isRed, isZero);
+
     // Show center result banner
     this.resultNumEl.textContent = winningNum;
     this.resultNumEl.style.color = isZero ? '#00e701' : (isRed ? '#ef4444' : '#ffffff');
@@ -497,12 +553,16 @@ class RouletteGame {
     this.centerResult.style.display = 'flex';
     this.centerResult.className = `roulette-center-result win-pop ${totalPayout > 0 ? 'win' : 'lose'}`;
 
-    if (totalPayout > 0 && window.soundFX) window.soundFX.playCashout();
-    else if (window.soundFX) window.soundFX.playDiceLoss();
+    if (totalPayout > 0) {
+      if (window.soundFX) window.soundFX.playCashout();
+      if (mult >= 5 && window.celebration) window.celebration.triggerConfetti();
+    } else if (window.soundFX) {
+      window.soundFX.playDiceLoss();
+    }
 
     // History update
     this.history.unshift(winningNum);
-    if (this.history.length > 8) this.history.pop();
+    if (this.history.length > 12) this.history.pop();
     this.updateRecentBar();
 
     this.onStateChange({ winningNum, totalPayout, isSpinning: false });
@@ -516,6 +576,32 @@ class RouletteGame {
       const bg = isZero ? '#00e701' : (isRed ? '#ef4444' : '#1e293b');
       return `<span class="roulette-hist-badge" style="background:${bg}">${num}</span>`;
     }).join('');
+
+    // Compute live hot/cold stats percentages
+    const totalCount = this.history.length;
+    if (totalCount > 0) {
+      let redCount = 0;
+      let zeroCount = 0;
+      let blackCount = 0;
+
+      this.history.forEach(n => {
+        if (n === 0) zeroCount++;
+        else if (RED_NUMBERS.has(n)) redCount++;
+        else blackCount++;
+      });
+
+      const redPct = Math.round((redCount / totalCount) * 100);
+      const blackPct = Math.round((blackCount / totalCount) * 100);
+      const zeroPct = Math.round((zeroCount / totalCount) * 100);
+
+      const redEl = document.getElementById('rouletteRedPct');
+      const blkEl = document.getElementById('rouletteBlackPct');
+      const zeroEl = document.getElementById('rouletteZeroPct');
+
+      if (redEl) redEl.textContent = `RED ${redPct}%`;
+      if (blkEl) blkEl.textContent = `BLK ${blackPct}%`;
+      if (zeroEl) zeroEl.textContent = `ZERO ${zeroPct}%`;
+    }
   }
 }
 
