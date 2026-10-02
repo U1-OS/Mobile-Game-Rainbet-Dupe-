@@ -7351,6 +7351,733 @@ body {
   100% { transform: scale(1); opacity: 1; }
 }
 
+/* ==========================================================================
+   Baccarat Macau VIP High-Roller Table Styles
+   ========================================================================== */
+.baccarat-macau-table {
+  background: radial-gradient(circle at 50% 20%, #0d2818 0%, #05140b 70%, #020804 100%);
+  border: 2px solid #2d6a4f;
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 8px 32px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.baccarat-macau-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+  margin-bottom: 12px;
+}
+
+.baccarat-shoe-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+}
+
+.baccarat-shoe-info .shoe-badge {
+  background: rgba(255, 215, 0, 0.15);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  color: #ffd700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+}
+
+.baccarat-squeeze-toggle-btn {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid #475569;
+  color: #cbd5e1;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.baccarat-squeeze-toggle-btn.active {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(245, 158, 11, 0.15));
+  border-color: #ffd700;
+  color: #ffd700;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+}
+
+.baccarat-felt-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.baccarat-felt-grid.side-bets-grid {
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 10px;
+}
+
+.baccarat-spot {
+  background: rgba(15, 23, 42, 0.65);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 10px 6px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  user-select: none;
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.baccarat-spot:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 215, 0, 0.5);
+  background: rgba(30, 41, 59, 0.8);
+}
+
+.baccarat-spot.spot-player {
+  border-color: rgba(59, 130, 246, 0.4);
+}
+.baccarat-spot.spot-player:hover, .baccarat-spot.spot-player.active {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.15);
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.3);
+}
+
+.baccarat-spot.spot-banker {
+  border-color: rgba(239, 68, 68, 0.4);
+}
+.baccarat-spot.spot-banker:hover, .baccarat-spot.spot-banker.active {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.15);
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.3);
+}
+
+.baccarat-spot.spot-tie {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+.baccarat-spot.spot-tie:hover, .baccarat-spot.spot-tie.active {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.15);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.3);
+}
+
+.baccarat-spot.spot-playerPair,
+.baccarat-spot.spot-bankerPair,
+.baccarat-spot.spot-perfectPair {
+  border-style: dashed;
+  min-height: 52px;
+  padding: 6px 4px;
+}
+
+.baccarat-spot.spot-perfectPair {
+  border-color: rgba(255, 215, 0, 0.4);
+}
+.baccarat-spot.spot-perfectPair:hover, .baccarat-spot.spot-perfectPair.active {
+  border-color: #ffd700;
+  background: rgba(255, 215, 0, 0.12);
+  box-shadow: 0 0 16px rgba(255, 215, 0, 0.3);
+}
+
+.baccarat-spot .spot-name {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+
+.baccarat-spot .spot-odds {
+  font-size: 10px;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+.baccarat-spot-badge {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #000;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 2px 6px;
+  border-radius: 10px;
+  border: 1.5px solid #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  animation: popIn 0.25s ease-out;
+}
+
+/* Card Squeeze Overlay */
+.baccarat-squeeze-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  border-radius: 16px;
+  animation: fadeIn 0.3s ease;
+}
+
+.baccarat-squeeze-card {
+  width: 140px;
+  height: 200px;
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 24px rgba(255, 215, 0, 0.4);
+  cursor: pointer;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-style: preserve-3d;
+}
+
+.baccarat-squeeze-hint {
+  font-size: 13px;
+  font-weight: 800;
+  color: #ffd700;
+  margin-top: 14px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   Stake-Grade Dice Engine Styles
+   ========================================================================== */
+.dice-slider-track-wrap {
+  position: relative;
+  width: 100%;
+  height: 28px;
+  margin: 16px 0;
+}
+
+.dice-slider-track {
+  width: 100%;
+  height: 14px;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  background: #1e293b;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+  display: flex;
+}
+
+.dice-slider-loss-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+  transition: width 0.1s ease;
+}
+
+.dice-slider-win-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #059669);
+  transition: width 0.1s ease;
+}
+
+.dice-presets-strip {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 6px 0;
+  margin-bottom: 10px;
+}
+
+.dice-preset-btn {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.dice-preset-btn:hover, .dice-preset-btn.active {
+  background: rgba(0, 231, 1, 0.15);
+  border-color: #00e701;
+  color: #00e701;
+  box-shadow: 0 0 10px rgba(0, 231, 1, 0.2);
+}
+
+.dice-auto-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-top: 10px;
+}
+
+.dice-auto-btn {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  color: #ffffff;
+  border: none;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+.dice-auto-btn.running {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  animation: pulse 1.2s infinite;
+}
+
+.dice-recent-ribbon {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 6px 0;
+  min-height: 32px;
+}
+
+.dice-history-badge {
+  font-size: 11px;
+  font-weight: 900;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  border: 1px solid transparent;
+}
+
+.dice-history-badge.win {
+  color: #00e701;
+  background: rgba(0, 231, 1, 0.12);
+  border-color: rgba(0, 231, 1, 0.35);
+}
+
+.dice-history-badge.loss {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+/* ==========================================================================
+   Limbo Turbo Multiplier Rocket Styles
+   ========================================================================== */
+.limbo-screen-aura {
+  background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.12) 0%, rgba(15, 23, 42, 0.8) 70%);
+  border: 2px solid rgba(0, 240, 255, 0.3);
+  border-radius: 16px;
+  padding: 24px 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 30px rgba(0, 240, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.5);
+  margin-bottom: 12px;
+}
+
+.limbo-screen-aura.won {
+  border-color: #00e701;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 231, 1, 0.18) 0%, rgba(15, 23, 42, 0.85) 70%);
+  box-shadow: inset 0 0 35px rgba(0, 231, 1, 0.25), 0 0 30px rgba(0, 231, 1, 0.3);
+}
+
+.limbo-screen-aura.lost {
+  border-color: #ef4444;
+  background: radial-gradient(circle at 50% 50%, rgba(239, 68, 68, 0.15) 0%, rgba(15, 23, 42, 0.85) 70%);
+  box-shadow: inset 0 0 35px rgba(239, 68, 68, 0.2), 0 0 30px rgba(239, 68, 68, 0.25);
+}
+
+.limbo-presets-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.limbo-preset-btn {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 8px 4px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.limbo-preset-btn:hover, .limbo-preset-btn.active {
+  background: rgba(0, 240, 255, 0.18);
+  border-color: #00f0ff;
+  color: #00f0ff;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+}
+
+.limbo-auto-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-top: 10px;
+}
+
+.limbo-auto-btn {
+  background: linear-gradient(135deg, #00f0ff, #0284c7);
+  color: #000000;
+  border: none;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+.limbo-auto-btn.running {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  color: #ffffff;
+  animation: pulse 1.2s infinite;
+}
+
+.limbo-history-strip {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 6px 0;
+  min-height: 32px;
+}
+
+.limbo-history-badge {
+  font-size: 11px;
+  font-weight: 900;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  border: 1px solid transparent;
+}
+
+.limbo-history-badge.win {
+  color: #00e701;
+  background: rgba(0, 231, 1, 0.12);
+  border-color: rgba(0, 231, 1, 0.35);
+}
+
+.limbo-history-badge.loss {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+/* ==========================================================================
+   Cases & Unboxing Tape Overhaul Styles
+   ========================================================================== */
+.crate-card.rarity-dragon {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(245, 158, 11, 0.15));
+  border: 1.5px solid #ef4444;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.25);
+}
+
+.crate-tag.mythic {
+  background: linear-gradient(135deg, #ef4444, #ec4899);
+  color: #ffffff;
+  font-weight: 900;
+}
+
+.cases-needle-top {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 12px solid #ffd700;
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.8));
+  z-index: 10;
+}
+
+.cases-needle-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 12px solid #ffd700;
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.8));
+  z-index: 10;
+}
+
+.tape-item.mythic {
+  border-bottom: 4px solid #ef4444;
+  background: radial-gradient(circle at 50% 30%, rgba(239, 68, 68, 0.25), rgba(15, 23, 42, 0.85));
+}
+
+.tape-item.legendary {
+  border-bottom: 4px solid #f59e0b;
+  background: radial-gradient(circle at 50% 30%, rgba(245, 158, 11, 0.25), rgba(15, 23, 42, 0.85));
+}
+
+.tape-item.epic {
+  border-bottom: 4px solid #a855f7;
+  background: radial-gradient(circle at 50% 30%, rgba(168, 85, 247, 0.25), rgba(15, 23, 42, 0.85));
+}
+
+.tape-item.rare {
+  border-bottom: 4px solid #3b82f6;
+  background: radial-gradient(circle at 50% 30%, rgba(59, 130, 246, 0.25), rgba(15, 23, 42, 0.85));
+}
+
+.tape-item.common {
+  border-bottom: 4px solid #94a3b8;
+  background: radial-gradient(circle at 50% 30%, rgba(148, 163, 184, 0.15), rgba(15, 23, 42, 0.85));
+}
+
+/* ==========================================================================
+   HiLo 3D Cards & Multiplier Ladder Styles
+   ========================================================================== */
+.hilo-hud-pills {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.hilo-choice-chance {
+  font-size: 11px;
+  font-weight: 700;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+.hilo-ladder-preview {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 6px 0;
+  margin: 10px 0;
+}
+
+.hilo-card.busted {
+  filter: grayscale(0.8) contrast(1.2);
+  border-color: #ef4444;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+  animation: shake 0.4s ease;
+}
+
+.hilo-skip-btn {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid #475569;
+  color: #f1f5f9;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hilo-skip-btn:hover:not(:disabled) {
+  border-color: #ffd700;
+  color: #ffd700;
+  background: rgba(255, 215, 0, 0.12);
+}
+
+/* ==========================================================================
+   Mines Titanium Grid & Multiplier Ladder Styles
+   ========================================================================== */
+.mines-ladder-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 6px 0;
+  margin-bottom: 10px;
+}
+
+.mines-ladder-step {
+  font-size: 10px;
+  font-weight: 900;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.mines-ladder-step.current {
+  background: rgba(0, 231, 1, 0.18);
+  border-color: #00e701;
+  color: #00e701;
+  box-shadow: 0 0 10px rgba(0, 231, 1, 0.25);
+}
+
+.mines-ghost-cell {
+  opacity: 0.45;
+  filter: grayscale(0.5);
+  transform: scale(0.92);
+}
+
+.mines-autopick-btn {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #ffffff;
+  border: none;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mines-cashout-btn {
+  background: linear-gradient(135deg, #00e701, #059669);
+  color: #000000;
+  border: none;
+  font-size: 13px;
+  font-weight: 900;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 231, 1, 0.4);
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+/* ==========================================================================
+   Crash Live Multiplayer Bettors Roster Styles
+   ========================================================================== */
+.crash-live-bettors-section {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-top: 10px;
+}
+
+.crash-bettors-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 11px;
+  font-weight: 800;
+  color: #94a3b8;
+}
+
+.pulse-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00e701;
+  box-shadow: 0 0 6px #00e701;
+  animation: pulse 1.2s infinite;
+  margin-right: 4px;
+}
+
+.crash-bettors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 160px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding-top: 6px;
+}
+
+.crash-bettor-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: rgba(30, 41, 59, 0.4);
+  font-size: 11px;
+  transition: all 0.2s ease;
+}
+
+.crash-bettor-row.user-pinned {
+  background: rgba(255, 215, 0, 0.12);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+}
+
+.crash-bettor-row.row-cashed {
+  background: rgba(0, 231, 1, 0.08);
+}
+
+.crash-bettor-row.row-busted {
+  background: rgba(239, 68, 68, 0.06);
+  opacity: 0.7;
+}
+
+.bettor-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.bettor-bet {
+  font-weight: 800;
+  color: #cbd5e1;
+  font-variant-numeric: tabular-nums;
+}
+
+.bettor-status {
+  font-size: 10px;
+  font-weight: 900;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.bettor-status.playing {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+}
+
+.bettor-status.cashed {
+  background: rgba(0, 231, 1, 0.2);
+  color: #00e701;
+  border: 1px solid rgba(0, 231, 1, 0.4);
+}
+
+.bettor-status.busted {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+
 
 
 

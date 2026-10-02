@@ -20,6 +20,7 @@ class CrashGame {
     this.lastRocketX = 0;
     this.lastRocketY = 0;
     this.lastRocketAngle = -0.5;
+    this.simulatedBettors = [];
 
     this.initCanvas();
     this.bindResize();
@@ -37,12 +38,23 @@ class CrashGame {
           <div class="crash-status-sub" id="crashStatusSub">Preparing...</div>
         </div>
       </div>
+      <!-- Live Multiplayer Bettors Roster -->
+      <div class="crash-live-bettors-section" id="crashLiveBettorsSection">
+        <div class="crash-bettors-header">
+          <div class="bettors-count"><span class="pulse-dot"></span> LIVE PLAYERS (<span id="crashPlayerCount">8</span>)</div>
+          <div class="bettors-total-pool">ROUND POOL: <span class="text-gold font-bold" id="crashRoundPool">$0.00</span></div>
+        </div>
+        <div class="crash-bettors-list" id="crashBettorsList"></div>
+      </div>
     `;
     this.canvas = document.getElementById('crashCanvas');
     this.ctx = this.canvas.getContext('2d');
     this.multText = document.getElementById('crashMultText');
     this.statusSub = document.getElementById('crashStatusSub');
     this.recentBar = document.getElementById('crashRecentBar');
+    this.bettorsList = document.getElementById('crashBettorsList');
+    this.playerCountEl = document.getElementById('crashPlayerCount');
+    this.roundPoolEl = document.getElementById('crashRoundPool');
     this.updateRecentBar();
   }
 
@@ -89,6 +101,7 @@ class CrashGame {
     };
 
     if (window.soundFX) window.soundFX.playClick();
+    this.updateBettorsList();
     this.onStateChange(this.getPublicState());
     return true;
   }
@@ -104,8 +117,104 @@ class CrashGame {
     window.appState.recordOutcome('Crash', this.userBet.amount, mult, payout);
     if (window.soundFX) window.soundFX.playCashout();
 
+    this.updateBettorsList();
     this.onStateChange(this.getPublicState());
     return true;
+  }
+
+  generateSimulatedBettors() {
+    const roster = [
+      { name: 'VipWhale_99', avatar: '🐋' },
+      { name: 'Satoshi_King', avatar: '👑' },
+      { name: 'RainChaser', avatar: '⚡' },
+      { name: 'ApexTrader', avatar: '🦅' },
+      { name: 'LuckyStrike', avatar: '🍀' },
+      { name: 'NeonGamer', avatar: '🎮' },
+      { name: 'HighRoller_88', avatar: '💎' },
+      { name: 'SolanaChad', avatar: '🚀' }
+    ];
+
+    this.simulatedBettors = roster.map(item => {
+      const bet = [10, 25, 50, 100, 250, 500][Math.floor(Math.random() * 6)];
+      const roll = Math.random();
+      let targetMult;
+      if (roll < 0.45) {
+        targetMult = parseFloat((1.12 + Math.random() * 0.88).toFixed(2));
+      } else if (roll < 0.8) {
+        targetMult = parseFloat((2.0 + Math.random() * 2.5).toFixed(2));
+      } else {
+        targetMult = parseFloat((5.0 + Math.random() * 15.0).toFixed(2));
+      }
+      return {
+        name: item.name,
+        avatar: item.avatar,
+        bet: bet,
+        targetMult: targetMult,
+        cashedOut: false,
+        payout: 0,
+        busted: false
+      };
+    });
+  }
+
+  updateBettorsList() {
+    if (!this.bettorsList) return;
+
+    let totalPool = 0;
+    let listHTML = '';
+
+    // If user bet placed, pin at top
+    if (this.userBet) {
+      totalPool += this.userBet.amount;
+      const statusBadge = this.userBet.cashedOut
+        ? `<span class="bettor-status cashed">CASHED @ ${(this.userBet.payout / this.userBet.amount).toFixed(2)}x (+$${(this.userBet.payout - this.userBet.amount).toFixed(2)})</span>`
+        : (this.state === 'CRASHED'
+          ? `<span class="bettor-status busted">BUSTED</span>`
+          : `<span class="bettor-status playing">IN PLAY</span>`);
+
+      listHTML += `
+        <div class="crash-bettor-row user-pinned">
+          <div class="bettor-info">
+            <span class="bettor-avatar">⭐</span>
+            <span class="bettor-name font-bold">YOU (VIP)</span>
+          </div>
+          <div class="bettor-bet text-gold font-bold">$${this.userBet.amount.toFixed(2)}</div>
+          <div class="bettor-result">${statusBadge}</div>
+        </div>
+      `;
+    }
+
+    // Simulated network players
+    for (const b of this.simulatedBettors) {
+      totalPool += b.bet;
+      let statusBadge = '';
+      if (b.cashedOut) {
+        statusBadge = `<span class="bettor-status cashed">${b.targetMult.toFixed(2)}x (+$${(b.payout - b.bet).toFixed(0)})</span>`;
+      } else if (b.busted || this.state === 'CRASHED') {
+        statusBadge = `<span class="bettor-status busted">BUSTED</span>`;
+      } else {
+        statusBadge = `<span class="bettor-status playing">IN PLAY</span>`;
+      }
+
+      listHTML += `
+        <div class="crash-bettor-row ${b.cashedOut ? 'row-cashed' : (b.busted ? 'row-busted' : '')}">
+          <div class="bettor-info">
+            <span class="bettor-avatar">${b.avatar}</span>
+            <span class="bettor-name">${b.name}</span>
+          </div>
+          <div class="bettor-bet">$${b.bet.toFixed(2)}</div>
+          <div class="bettor-result">${statusBadge}</div>
+        </div>
+      `;
+    }
+
+    this.bettorsList.innerHTML = listHTML;
+    if (this.playerCountEl) {
+      this.playerCountEl.textContent = this.simulatedBettors.length + (this.userBet ? 1 : 0);
+    }
+    if (this.roundPoolEl) {
+      this.roundPoolEl.textContent = `$${totalPool.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
   }
 
   startRoundPrep() {
@@ -115,6 +224,9 @@ class CrashGame {
     this.prepStartTime = performance.now();
     this.userBet = null;
     this.particles = [];
+
+    this.generateSimulatedBettors();
+    this.updateBettorsList();
 
     this.multText.className = 'crash-multiplier-text preparing';
     this.onStateChange(this.getPublicState());
@@ -133,6 +245,14 @@ class CrashGame {
     this.multText.className = 'crash-multiplier-text crashed';
     this.multText.textContent = this.crashPoint.toFixed(2) + 'x';
     this.statusSub.textContent = 'CRASHED';
+
+    // Mark remaining uncashed bettors as busted
+    for (const b of this.simulatedBettors) {
+      if (!b.cashedOut) {
+        b.busted = true;
+      }
+    }
+    this.updateBettorsList();
 
     // Explosion particles
     this.spawnExplosion();
@@ -227,6 +347,19 @@ class CrashGame {
         if (this.currentMultiplier >= this.userBet.autoCashout) {
           this.cashOut();
         }
+      }
+
+      // Check simulated bettors cashouts
+      let needBettorsUpdate = false;
+      for (const b of this.simulatedBettors) {
+        if (!b.cashedOut && this.currentMultiplier >= b.targetMult && b.targetMult <= this.crashPoint) {
+          b.cashedOut = true;
+          b.payout = b.bet * b.targetMult;
+          needBettorsUpdate = true;
+        }
+      }
+      if (needBettorsUpdate) {
+        this.updateBettorsList();
       }
 
       // Check if hit crash point

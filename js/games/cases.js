@@ -1,5 +1,14 @@
-// Case Opening Engine for RainStake Mobile
-// Rainbet-style mystery case unboxing reel with deceleration physics & rarity tiers
+// Luxury Mystery Case Unboxing Engine for DruBet
+// Features:
+// - Authentic CS:GO / Stake.com horizontal unboxing reel with physics deceleration
+// - 4 Tiered Luxury Crates:
+//   1. 📦 Starter Rain ($25)
+//   2. ⚡ Cyber Neon ($100)
+//   3. 👑 High Roller Vault ($500)
+//   4. 🐉 Dragon King ($1,000)
+// - Precision center needle with audio ticks synchronized to item borders
+// - Rarity tiers with glowing aura effects (Common, Rare, Epic, Legendary, Mythic)
+// - Interactive case preview and post-unboxing celebration modal
 
 const MYSTERY_CASES = {
   starter: {
@@ -43,6 +52,20 @@ const MYSTERY_CASES = {
       { name: 'Diamond Crown', value: 4500, mult: 9.0, rarity: 'epic', color: '#a855f7' },
       { name: 'Rain God Chalice', value: 25000, mult: 50.0, rarity: 'legendary', color: '#f59e0b' }
     ]
+  },
+  dragon: {
+    id: 'dragon',
+    name: 'Dragon King',
+    cost: 1000,
+    icon: '🐉',
+    items: [
+      { name: 'Dragon Scale', value: 200, mult: 0.2, rarity: 'common', color: '#64748b' },
+      { name: 'Ruby Fang', value: 600, mult: 0.6, rarity: 'common', color: '#94a3b8' },
+      { name: 'Dragon Heart', value: 1500, mult: 1.5, rarity: 'rare', color: '#00e701' },
+      { name: 'Obsidian Blade', value: 3500, mult: 3.5, rarity: 'rare', color: '#00e701' },
+      { name: 'Emperor Scepter', value: 10000, mult: 10.0, rarity: 'epic', color: '#a855f7' },
+      { name: 'Mythic AWP Dragon Lore', value: 60000, mult: 60.0, rarity: 'mythic', color: '#ec4899' }
+    ]
   }
 };
 
@@ -58,24 +81,38 @@ class CasesGame {
 
   renderUI() {
     this.container.innerHTML = `
-      <div class="cases-selector-tabs">
-        <button class="case-tab active" data-case="starter">📦 Starter ($25)</button>
-        <button class="case-tab" data-case="cyber">⚡ Cyber ($100)</button>
-        <button class="case-tab" data-case="vault">👑 Vault ($500)</button>
-      </div>
+      <div class="cases-cabinet">
+        
+        <!-- Header Case Selector Tabs -->
+        <div class="cases-selector-tabs">
+          <button class="case-tab active" data-case="starter">📦 Starter ($25)</button>
+          <button class="case-tab" data-case="cyber">⚡ Cyber ($100)</button>
+          <button class="case-tab" data-case="vault">👑 Vault ($500)</button>
+          <button class="case-tab" data-case="dragon">🐉 Dragon ($1k)</button>
+        </div>
 
-      <div class="case-unboxing-viewport">
-        <div class="case-center-needle"></div>
-        <div class="case-reel-tape" id="caseReelTape"></div>
-      </div>
+        <!-- Center Golden Needle Viewport -->
+        <div class="case-unboxing-viewport">
+          <div class="case-center-needle">
+            <div class="needle-arrow top"></div>
+            <div class="needle-line"></div>
+            <div class="needle-arrow bottom"></div>
+          </div>
+          <div class="case-reel-tape" id="caseReelTape"></div>
+        </div>
 
-      <div class="case-win-banner" id="caseWinBanner" style="display:none">
-        <div class="case-win-icon" id="caseWinIcon">💎</div>
-        <div class="case-win-title" id="caseWinTitle">Diamond Ring</div>
-        <div class="case-win-amount text-gold" id="caseWinAmount">+$125.00 (5.0x)</div>
-      </div>
+        <!-- Win Celebration Banner -->
+        <div class="case-win-banner" id="caseWinBanner" style="display:none">
+          <div class="case-win-icon" id="caseWinIcon">💎</div>
+          <div class="case-win-info">
+            <div class="case-win-title" id="caseWinTitle">Diamond Ring</div>
+            <div class="case-win-amount text-gold" id="caseWinAmount">+$125.00 (5.0×)</div>
+          </div>
+        </div>
 
-      <div class="case-contents-preview" id="caseContentsPreview"></div>
+        <!-- Crate Drops Catalog Preview -->
+        <div class="case-contents-preview" id="caseContentsPreview"></div>
+      </div>
     `;
 
     this.tape = document.getElementById('caseReelTape');
@@ -109,12 +146,12 @@ class CasesGame {
   renderCasePreview() {
     const caseData = MYSTERY_CASES[this.activeCaseKey];
     this.preview.innerHTML = `
-      <div class="case-preview-title">Possible Case Drops:</div>
+      <div class="case-preview-title">Possible ${caseData.name} Drops:</div>
       <div class="case-items-grid">
         ${caseData.items.map(it => `
           <div class="case-item-card ${it.rarity}" style="border-color:${it.color}66">
             <span class="item-name">${it.name}</span>
-            <span class="item-mult" style="color:${it.color}">$${it.value.toLocaleString()} (${it.mult}x)</span>
+            <span class="item-mult" style="color:${it.color}">$${it.value.toLocaleString()} (${it.mult}×)</span>
           </div>
         `).join('')}
       </div>
@@ -134,7 +171,7 @@ class CasesGame {
         <div class="case-tape-card ${item.rarity}" style="border-top-color:${item.color}">
           <span class="card-icon">${caseData.icon}</span>
           <span class="card-title">${item.name}</span>
-          <span class="card-value" style="color:${item.color}">$${item.value}</span>
+          <span class="card-value" style="color:${item.color}">$${item.value.toLocaleString()}</span>
         </div>
       `;
     }
@@ -154,8 +191,8 @@ class CasesGame {
     this.isUnboxing = true;
     this.winBanner.style.display = 'none';
 
-    // Pick winner based on weights (legendary is rarest)
-    const weights = [45, 30, 15, 7, 2.5, 0.5]; // for the 6 items
+    // Weighted outcomes (highest tier rarest)
+    const weights = [45, 30, 15, 7, 2.5, 0.5];
     const totalWeight = weights.reduce((a, b) => a + b, 0);
     let rand = Math.random() * totalWeight;
     let winningItem = caseData.items[0];
@@ -168,24 +205,24 @@ class CasesGame {
       rand -= weights[i];
     }
 
-    // Target index is card 32
-    const winningIndex = 32;
+    // Winning index fixed at 34
+    const winningIndex = 34;
     const cardWidth = 110; // width + gap
     const containerWidth = this.container.querySelector('.case-unboxing-viewport').offsetWidth;
     const centerOffset = containerWidth / 2 - cardWidth / 2;
-    // Small random jitter within the winning card
-    const jitter = (Math.random() - 0.5) * 60;
+    // Small random jitter within center of card
+    const jitter = (Math.random() - 0.5) * 50;
     const targetTranslate = -(winningIndex * cardWidth - centerOffset + jitter);
 
-    // Build the tape with the winner firmly embedded at index 32
+    // Build tape with winner at index 34
     let html = '';
-    for (let i = 0; i < 45; i++) {
+    for (let i = 0; i < 48; i++) {
       const item = (i === winningIndex) ? winningItem : caseData.items[Math.floor(Math.random() * caseData.items.length)];
       html += `
         <div class="case-tape-card ${item.rarity}" style="border-top-color:${item.color}">
           <span class="card-icon">${caseData.icon}</span>
           <span class="card-title">${item.name}</span>
-          <span class="card-value" style="color:${item.color}">$${item.value}</span>
+          <span class="card-value" style="color:${item.color}">$${item.value.toLocaleString()}</span>
         </div>
       `;
     }
@@ -193,23 +230,23 @@ class CasesGame {
     this.tape.style.transition = 'none';
     this.tape.style.transform = 'translateX(0px)';
 
-    // Trigger smooth deceleration
+    // Trigger smooth deceleration physics
     setTimeout(() => {
       this.tape.style.transition = 'transform 4.5s cubic-bezier(0.12, 0.8, 0.22, 1)';
       this.tape.style.transform = `translateX(${targetTranslate}px)`;
       if (window.soundFX) window.soundFX.playDiceRoll();
     }, 50);
 
-    // Audio ticks during spin
-    for (let t = 0; t < 22; t++) {
+    // Synchronized audio ticks
+    for (let t = 0; t < 24; t++) {
       setTimeout(() => {
         if (this.isUnboxing && window.soundFX) {
           window.soundFX.playSpinTick();
         }
-      }, 100 + Math.pow(t, 1.8) * 12);
+      }, 100 + Math.pow(t, 1.85) * 11);
     }
 
-    // Landed!
+    // Landed
     setTimeout(() => {
       this.isUnboxing = false;
       const payout = winningItem.value;
@@ -217,8 +254,9 @@ class CasesGame {
 
       window.appState.recordOutcome('Cases', cost, mult, payout);
 
+      this.winIcon.textContent = caseData.icon;
       this.winTitle.textContent = winningItem.name;
-      this.winAmount.textContent = `+$${payout.toLocaleString()} (${mult}x)`;
+      this.winAmount.textContent = `+$${payout.toLocaleString()} (${mult}×)`;
       this.winAmount.style.color = winningItem.color;
       this.winBanner.style.display = 'flex';
       this.winBanner.className = `case-win-banner win-pop ${winningItem.rarity}`;
