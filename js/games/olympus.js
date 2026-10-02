@@ -182,7 +182,7 @@ class GatesOfOlympusGame {
         <div class="slots-bigwin-modal" id="olympusCelebrationModal" style="display: none;">
           <div class="bigwin-content">
             <div class="bigwin-sparkles">⚡ 👑 🏆 ⚡</div>
-            <div class="bigwin-title" id="olympusCelebrationTitle">ZEUS 1000 MEGA WIN!</div>
+            <div class="bigwin-title" id="olympusCelebrationTitle">⚡ RAIN GOD 1000 MEGA WIN! ⚡</div>
             <div class="bigwin-amount text-gold" id="olympusCelebrationAmount">$0.00</div>
             <div class="bigwin-mult text-cyan" id="olympusCelebrationDesc">CASCADING MULTIPLIER HIT!</div>
           </div>
@@ -243,7 +243,7 @@ class GatesOfOlympusGame {
         }
 
         window.appState.deductBet(cost);
-        window.app?.showToast('⚡ 15 FREE SPINS BOUGHT! Zeus descending!');
+        window.app?.showToast('⚡ 15 FREE SPINS BOUGHT! Rain God descending!');
         this.spin(true);
       });
     }
