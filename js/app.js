@@ -92,20 +92,137 @@ const GAME_METADATA = {
     `
   },
   olympus: {
-    name: 'Gates of Olympus 1000',
+    name: 'Rain God 1000',
     rtp: '96.50% RTP',
     category: 'slots',
-    provider: 'PRAGMATIC PLAY',
+    provider: 'ARH BET SLOTS',
     rules: `
-      <h4>Gates of Olympus 1000 Rules</h4>
+      <h4>Rain God 1000 Rules</h4>
       <ul>
         <li><strong>Scatter Pays:</strong> 6x5 grid. Symbols pay ANYWHERE on screen when 8 or more identical symbols land!</li>
         <li><strong>Tumble Feature:</strong> Winning symbols explode and disappear. Remaining symbols fall down, and new symbols drop from above for consecutive wins!</li>
-        <li><strong>Zeus Multipliers:</strong> Zeus strikes with lightning and drops winged multiplier orbs randomly from 2x up to 1,000x!</li>
-        <li><strong>Free Spins:</strong> 4 or more Zeus Scatters award 15 Free Spins!</li>
+        <li><strong>Rain God Multipliers:</strong> The Rain God strikes with thunder and drops winged multiplier orbs randomly from 2x up to 1,000x!</li>
+        <li><strong>Free Spins:</strong> 4 or more Rain God Scatters award 15 Free Spins!</li>
         <li><strong>Persistent Multiplier:</strong> In Free Spins, any multiplier that hits on a winning tumble is added to the Total Multiplier for the entire bonus!</li>
         <li><strong>Buy Bonus:</strong> Buy 15 Free Spins instantly for 100x bet!</li>
         <li><strong>Double Chance:</strong> Turn on Ante Bet (+25% bet) for 2x natural chance of hitting Free Spins.</li>
+      </ul>
+    `
+  },
+  sweetbonanza: {
+    name: 'Sweet Bonanza 1000',
+    rtp: '96.53% RTP',
+    category: 'slots',
+    provider: 'PRAGMATIC PLAY',
+    rules: `
+      <h4>Sweet Bonanza 1000 Rules</h4>
+      <ul>
+        <li><strong>Pay Anywhere:</strong> 6x5 tumble grid where 8+ matching candies anywhere on screen pay.</li>
+        <li><strong>Tumbling Reels:</strong> Winning candies explode and new candies drop down in rapid succession.</li>
+        <li><strong>Sugar Bomb Multipliers:</strong> In Free Spins, rainbow sugar bombs drop with multipliers from 2x up to 1,000x!</li>
+        <li><strong>Free Spins Feature:</strong> 4+ Lollipops award 10 Free Spins!</li>
+        <li><strong>Buy Bonus:</strong> 100x Standard Bonus or 500x Super Bonus with guaranteed 20x+ bombs!</li>
+      </ul>
+    `
+  },
+  sugarrush: {
+    name: 'Sugar Rush 1000',
+    rtp: '96.53% RTP',
+    category: 'slots',
+    provider: 'PRAGMATIC PLAY',
+    rules: `
+      <h4>Sugar Rush 1000 Rules</h4>
+      <ul>
+        <li><strong>Cluster Pays:</strong> 7x7 grid. Form clusters of 5 or more connected gummy bears and stars.</li>
+        <li><strong>Multiplier Spots:</strong> Winning symbols leave a wrapper. A second win on that spot starts a 2x multiplier that DOUBLES on every win up to 1,024x!</li>
+        <li><strong>Persistent Free Spins:</strong> In Free Spins, all multiplier spots remain sticky until the bonus ends!</li>
+        <li><strong>Buy Bonus:</strong> 100x Standard Free Spins or 500x Super Free Spins (all spots pre-filled with 2x)!</li>
+      </ul>
+    `
+  },
+  wanted: {
+    name: 'Wanted Dead or a Wild',
+    rtp: '96.38% RTP',
+    category: 'slots',
+    provider: 'HACKSAW GAMING',
+    rules: `
+      <h4>Wanted Dead or a Wild Rules</h4>
+      <ul>
+        <li><strong>VS DuelReels:</strong> When a VS symbol lands and forms part of a win, it expands into a full wild duel reel with multipliers up to 100x!</li>
+        <li><strong>The Great Train Robbery:</strong> 3+ Train Robbery symbols award 10 Free Spins with sticky wilds.</li>
+        <li><strong>Duel at Dawn:</strong> 3+ Duel symbols award 10 Free Spins loaded with VS DuelReels.</li>
+        <li><strong>Dead Man's Hand:</strong> Collect wilds and multipliers in phase 1, then spin 3 showdown spins!</li>
+      </ul>
+    `
+  },
+  bigbass: {
+    name: 'Big Bass Splash',
+    rtp: '96.71% RTP',
+    category: 'slots',
+    provider: 'REEL KINGDOM',
+    rules: `
+      <h4>Big Bass Splash Rules</h4>
+      <ul>
+        <li><strong>Money Fish:</strong> Fish symbols carry random cash values from 2x to 500x your bet.</li>
+        <li><strong>Fisherman Wild:</strong> Appears during Free Spins to reel in and collect all visible fish money values!</li>
+        <li><strong>Free Spins Level-up:</strong> Every 4 Fishermen collected awards +10 Free Spins and increases the Fisherman multiplier (2x, 3x, and 10x)!</li>
+        <li><strong>Bazooka & Hook:</strong> Random modifiers reel in extra fish when a Fisherman lands with no fish!</li>
+      </ul>
+    `
+  },
+  doghouse: {
+    name: 'The Dog House Megaways',
+    rtp: '96.55% RTP',
+    category: 'slots',
+    provider: 'PRAGMATIC PLAY',
+    rules: `
+      <h4>The Dog House Megaways Rules</h4>
+      <ul>
+        <li><strong>Megaways Action:</strong> 6 reels with up to 117,649 ways to win!</li>
+        <li><strong>Multiplying Kennel Wilds:</strong> Dog kennels land with 2x or 3x multipliers and multiply each other!</li>
+        <li><strong>Raining Wilds or Sticky Wilds:</strong> Choose between Sticky Wilds Free Spins or Raining Wilds Free Spins!</li>
+      </ul>
+    `
+  },
+  bookofdead: {
+    name: 'Book of Dead',
+    rtp: '96.21% RTP',
+    category: 'slots',
+    provider: 'PLAY\'N GO',
+    rules: `
+      <h4>Book of Dead Rules</h4>
+      <ul>
+        <li><strong>Rich Wilde Adventure:</strong> 5x3 reels with 10 classic paylines in ancient Egypt.</li>
+        <li><strong>Tomb Book Symbol:</strong> Acts as both Wild and Scatter!</li>
+        <li><strong>Expanding Symbol:</strong> 3+ Books trigger 10 Free Spins with 1 randomly chosen special expanding symbol that covers whole reels!</li>
+      </ul>
+    `
+  },
+  razorshark: {
+    name: 'Razor Shark',
+    rtp: '96.70% RTP',
+    category: 'slots',
+    provider: 'PUSH GAMING',
+    rules: `
+      <h4>Razor Shark Rules</h4>
+      <ul>
+        <li><strong>Mystery Seaweed:</strong> Stacks of 4 seaweed nudge down each spin, revealing paying symbols or Golden Sharks!</li>
+        <li><strong>Razor Reveal:</strong> Golden Sharks spin into bet multipliers up to 2,500x or Scatter symbols!</li>
+        <li><strong>Free Games:</strong> Unlimited Free Games with increasing multipliers on every seaweed nudge!</li>
+      </ul>
+    `
+  },
+  sanquentin: {
+    name: 'San Quentin xWays',
+    rtp: '96.03% RTP',
+    category: 'slots',
+    provider: 'NOLIMIT CITY',
+    rules: `
+      <h4>San Quentin xWays Rules</h4>
+      <ul>
+        <li><strong>Enhancer Cells:</strong> Locked cells on top and bottom reels open to reveal xWays, Razor Splits, or Wilds!</li>
+        <li><strong>Razor Split:</strong> Splits all symbols on the reel into doubles!</li>
+        <li><strong>Lockdown Spins:</strong> Jumping Wilds that move each spin with multiplying frenzy up to 150,000x max win!</li>
       </ul>
     `
   },
@@ -135,6 +252,36 @@ const GAME_METADATA = {
         <li><strong>Unboxing:</strong> Open virtual weapon & crypto cases with authentic roulette rolling animation.</li>
         <li><strong>Odds & Tiers:</strong> Items range from Common (Grey), Rare (Blue), Classified (Pink), Covert (Red), to Gold Jackpot Knives & Gloves!</li>
         <li><strong>Instant Payout:</strong> Winning item simulated value is immediately credited to your balance.</li>
+      </ul>
+    `
+  },
+  chicken: {
+    name: 'Chicken Road',
+    rtp: '99.00% RTP',
+    category: 'originals',
+    provider: 'RAIN ORIGINAL',
+    rules: `
+      <h4>Chicken Road Rules</h4>
+      <ul>
+        <li><strong>Cross the Road:</strong> Guide the 🐔 safely across each lane without getting hit by cars or roasted by fire!</li>
+        <li><strong>Difficulty Modes:</strong> Choose Easy (25 steps, 8% traps), Medium (20 steps, 15% traps), Hard (15 steps, 25% traps), or Daredevil (10 steps, 40% traps).</li>
+        <li><strong>Multiplier Ladder:</strong> Every successful hop increases your multiplier up to 2,000x+!</li>
+        <li><strong>Cash Out Anytime:</strong> Take your profits whenever you want before disaster strikes!</li>
+      </ul>
+    `
+  },
+  btcupdown: {
+    name: 'BTC 2.5M Up or Down',
+    rtp: '97.50% RTP',
+    category: 'originals',
+    provider: 'CRYPTO DERIVATIVES',
+    rules: `
+      <h4>BTC 2.5 Minute Up or Down Rules</h4>
+      <ul>
+        <li><strong>Binary Expiry:</strong> 2.5 minute (150-second) candlestick interval rounds based on real-time Bitcoin price action.</li>
+        <li><strong>Strike Price:</strong> The opening price of the 2.5-minute candle marks the Strike Price.</li>
+        <li><strong>Predict Direction:</strong> Predict whether BTC will close HIGHER (UP ▲) or LOWER (DOWN ▼) than the Strike Price at expiry.</li>
+        <li><strong>Fixed Payout:</strong> Correct predictions win 1.95x your bet instantly!</li>
       </ul>
     `
   },
@@ -967,6 +1114,46 @@ class RainStakeApp {
       if (!this.gameInstances.cases) {
         this.gameInstances.cases = new window.CasesGame('casesContainer', () => this.updateDockState());
       }
+    } else if (gameId === 'sweetbonanza') {
+      if (!this.gameInstances.sweetbonanza) {
+        this.gameInstances.sweetbonanza = new window.SweetBonanzaGame('sweetbonanzaContainer', () => this.updateDockState());
+      }
+    } else if (gameId === 'sugarrush') {
+      if (!this.gameInstances.sugarrush) {
+        this.gameInstances.sugarrush = new window.SugarRushGame('sugarrushContainer', () => this.updateDockState());
+      }
+    } else if (gameId === 'wanted') {
+      if (!this.gameInstances.wanted) {
+        this.gameInstances.wanted = new window.WantedDeadOrAWildGame('wantedContainer', () => this.updateDockState());
+      }
+    } else if (gameId === 'bigbass') {
+      if (!this.gameInstances.bigbass) {
+        this.gameInstances.bigbass = new window.BigBassSplashGame('bigbassContainer', () => this.updateDockState());
+      }
+    } else if (gameId === 'doghouse') {
+      if (!this.gameInstances.doghouse) {
+        this.gameInstances.doghouse = new window.DogHouseMegawaysGame('doghouseContainer', () => this.updateDockState());
+      }
+    } else if (gameId === 'bookofdead') {
+      if (!this.gameInstances.bookofdead) {
+        this.gameInstances.bookofdead = new window.BookOfDeadGame('bookofdeadContainer', () => this.updateDockState());
+      }
+    } else if (gameId === 'razorshark') {
+      if (!this.gameInstances.razorshark) {
+        this.gameInstances.razorshark = new window.RazorSharkGame('razorsharkContainer', () => this.updateDockState());
+      }
+    } else if (gameId === 'sanquentin') {
+      if (!this.gameInstances.sanquentin) {
+        this.gameInstances.sanquentin = new window.SanQuentinGame('sanquentinContainer', () => this.updateDockState());
+      }
+    } else if (gameId === 'chicken') {
+      if (!this.gameInstances.chicken) {
+        this.gameInstances.chicken = new window.ChickenRoadGame('chickenContainer', () => this.updateDockState());
+      }
+    } else if (gameId === 'btcupdown') {
+      if (!this.gameInstances.btcupdown) {
+        this.gameInstances.btcupdown = new window.BtcUpDownGame('btcupdownContainer', () => this.updateDockState());
+      }
     }
   }
 
@@ -994,9 +1181,22 @@ class RainStakeApp {
         this.mainActionBtn.className = 'dock-main-btn btn-purple pulse-btn';
         this.mainActionBtn.disabled = true;
       } else {
-        this.mainActionBtn.textContent = oly?.isSpinning ? 'TUMBLING...' : 'SPIN OLYMPUS';
+        this.mainActionBtn.textContent = oly?.isSpinning ? 'TUMBLING...' : 'SPIN RAIN GOD';
         this.mainActionBtn.className = 'dock-main-btn btn-cyan';
         this.mainActionBtn.disabled = oly?.isSpinning;
+      }
+    } else if (['sweetbonanza', 'sugarrush', 'wanted', 'bigbass', 'doghouse', 'bookofdead', 'razorshark', 'sanquentin'].includes(game)) {
+      this.subActionBtn.style.display = 'none';
+      const slotInst = this.gameInstances[game];
+      if (slotInst?.inFreeSpins) {
+        this.mainActionBtn.textContent = `FREE SPINS (${slotInst.freeSpinsLeft})`;
+        this.mainActionBtn.className = 'dock-main-btn btn-purple pulse-btn';
+        this.mainActionBtn.disabled = true;
+      } else {
+        const slotMeta = GAME_METADATA[game];
+        this.mainActionBtn.textContent = slotInst?.isSpinning ? 'SPINNING...' : `SPIN ${slotMeta?.name?.toUpperCase() || 'REELS'}`;
+        this.mainActionBtn.className = 'dock-main-btn btn-gold';
+        this.mainActionBtn.disabled = slotInst?.isSpinning;
       }
     } else if (game === 'plinko') {
       this.mainActionBtn.textContent = 'DROP BALL';
@@ -1131,6 +1331,39 @@ class RainStakeApp {
       this.mainActionBtn.textContent = cases?.isUnboxing ? 'UNBOXING...' : `OPEN CASE ($${caseCost})`;
       this.mainActionBtn.className = 'dock-main-btn btn-gold';
       this.mainActionBtn.disabled = cases?.isUnboxing;
+    } else if (game === 'chicken') {
+      this.subActionBtn.style.display = 'none';
+      const chk = this.gameInstances.chicken;
+      if (chk && chk.isPlaying) {
+        if (chk.currentStep > 0) {
+          const mult = chk.multipliers[chk.currentStep - 1];
+          const val = (this.currentBetAmount * mult).toFixed(2);
+          this.mainActionBtn.textContent = `CASH OUT $${val} (${mult}×)`;
+          this.mainActionBtn.className = 'dock-main-btn btn-gold pulse-btn';
+        } else {
+          this.mainActionBtn.textContent = 'CROSS NEXT LANE 👟';
+          this.mainActionBtn.className = 'dock-main-btn btn-cyan';
+        }
+      } else {
+        this.mainActionBtn.textContent = 'START CHICKEN ROAD';
+        this.mainActionBtn.className = 'dock-main-btn btn-green';
+      }
+      this.mainActionBtn.disabled = false;
+    } else if (game === 'btcupdown') {
+      const btc = this.gameInstances.btcupdown;
+      if (btc && btc.betPlacedInCurrentRound) {
+        this.subActionBtn.style.display = 'none';
+        this.mainActionBtn.textContent = `ACTIVE: ${btc.userPrediction} ($${btc.userBetAmount.toFixed(2)})`;
+        this.mainActionBtn.className = 'dock-main-btn btn-grey';
+        this.mainActionBtn.disabled = true;
+      } else {
+        this.subActionBtn.style.display = 'block';
+        this.subActionBtn.textContent = 'DOWN ▼';
+        this.subActionBtn.className = 'dock-sub-btn btn-red';
+        this.mainActionBtn.textContent = 'PREDICT UP ▲ (1.95×)';
+        this.mainActionBtn.className = 'dock-main-btn btn-green';
+        this.mainActionBtn.disabled = false;
+      }
     }
   }
 
@@ -1142,6 +1375,8 @@ class RainStakeApp {
       this.gameInstances.lightning?.spin();
     } else if (game === 'olympus') {
       this.gameInstances.olympus?.spin();
+    } else if (['sweetbonanza', 'sugarrush', 'wanted', 'bigbass', 'doghouse', 'bookofdead', 'razorshark', 'sanquentin'].includes(game)) {
+      this.gameInstances[game]?.spin();
     } else if (game === 'plinko') {
       this.gameInstances.plinko.dropBall(bet);
     } else if (game === 'crash') {
@@ -1182,6 +1417,24 @@ class RainStakeApp {
       this.gameInstances.slots.spin(bet);
     } else if (game === 'cases') {
       this.gameInstances.cases.openCase();
+    } else if (game === 'chicken') {
+      const chk = this.gameInstances.chicken;
+      if (chk) {
+        if (chk.isPlaying) {
+          if (chk.currentStep > 0) {
+            chk.cashOut();
+          } else {
+            chk.step();
+          }
+        } else {
+          chk.startGame(bet);
+        }
+      }
+    } else if (game === 'btcupdown') {
+      const btc = this.gameInstances.btcupdown;
+      if (btc && !btc.betPlacedInCurrentRound) {
+        btc.placePrediction('UP');
+      }
     }
 
     this.updateDockState();
@@ -1192,6 +1445,11 @@ class RainStakeApp {
       this.gameInstances.plinko.toggleAutoDrop(this.currentBetAmount, (isAuto) => {
         this.updateDockState();
       });
+    } else if (this.activeGameId === 'btcupdown') {
+      const btc = this.gameInstances.btcupdown;
+      if (btc && !btc.betPlacedInCurrentRound) {
+        btc.placePrediction('DOWN');
+      }
     }
   }
 

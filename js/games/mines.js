@@ -18,6 +18,16 @@ class MinesGame {
 
   renderInitialUI() {
     this.container.innerHTML = `
+      <!-- Stake-style Quick Mines Difficulty Presets -->
+      <div class="mines-presets-strip">
+        <span class="preset-label">MINES:</span>
+        <button class="mines-preset-btn ${this.minesCount === 1 ? 'active' : ''}" data-mines="1">1</button>
+        <button class="mines-preset-btn ${this.minesCount === 3 ? 'active' : ''}" data-mines="3">3</button>
+        <button class="mines-preset-btn ${this.minesCount === 5 ? 'active' : ''}" data-mines="5">5</button>
+        <button class="mines-preset-btn ${this.minesCount === 10 ? 'active' : ''}" data-mines="10">10</button>
+        <button class="mines-preset-btn ${this.minesCount === 24 ? 'active' : ''}" data-mines="24">24 💀</button>
+      </div>
+
       <div class="mines-stats-bar">
         <div class="mines-stat-box">
           <span class="label">Mines</span>
@@ -36,7 +46,18 @@ class MinesGame {
           <span class="val text-purple" id="minesNextMultDisplay">${this.calculateMultiplier(1).toFixed(2)}x</span>
         </div>
       </div>
+
+      <!-- Live Dynamic Multiplier Ladder Track -->
+      <div class="mines-ladder-container" id="minesLadderContainer">
+        ${this.renderLadderHTML()}
+      </div>
+
       <div class="mines-grid" id="minesGrid"></div>
+
+      <!-- Auto Pick Random Tile Helper -->
+      <div class="mines-bottom-controls" id="minesBottomControls" style="display:none;">
+        <button class="btn-auto-pick" id="minesAutoPickBtn">🎲 PICK RANDOM TILE</button>
+      </div>
     `;
 
     this.gridEl = document.getElementById('minesGrid');
@@ -44,8 +65,66 @@ class MinesGame {
     this.gemsDisplay = document.getElementById('minesGemsDisplay');
     this.multDisplay = document.getElementById('minesMultDisplay');
     this.nextMultDisplay = document.getElementById('minesNextMultDisplay');
+    this.bottomControls = document.getElementById('minesBottomControls');
+    this.autoPickBtn = document.getElementById('minesAutoPickBtn');
 
+    this.bindPresets();
     this.buildGridDOM();
+  }
+
+  renderLadderHTML() {
+    let html = '';
+    const safeTiles = 25 - this.minesCount;
+    const startStep = Math.max(1, this.revealedCount + 1);
+    const endStep = Math.min(safeTiles, startStep + 4);
+
+    for (let s = startStep; s <= endStep; s++) {
+      const mult = this.calculateMultiplier(s);
+      const isNext = s === this.revealedCount + 1;
+      html += `
+        <div class="ladder-step ${isNext ? 'ladder-next' : ''}">
+          <span class="ladder-gem-num">#${s}</span>
+          <span class="ladder-mult-val">${mult.toFixed(2)}×</span>
+        </div>
+      `;
+    }
+    return html;
+  }
+
+  updateLadder() {
+    const el = document.getElementById('minesLadderContainer');
+    if (el) el.innerHTML = this.renderLadderHTML();
+  }
+
+  bindPresets() {
+    const presetBtns = this.container.querySelectorAll('.mines-preset-btn');
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (this.isPlaying) return;
+        presetBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        this.setMinesCount(btn.dataset.mines);
+        this.updateLadder();
+        if (window.soundFX) window.soundFX.playClick();
+      });
+    });
+
+    if (this.autoPickBtn) {
+      this.autoPickBtn.addEventListener('click', () => {
+        if (!this.isPlaying) return;
+        const unrevealed = [];
+        for (let i = 0; i < this.gridSize; i++) {
+          const t = this.gridEl.children[i];
+          if (t && !t.classList.contains('revealed')) {
+            unrevealed.push(i);
+          }
+        }
+        if (unrevealed.length > 0) {
+          const pick = unrevealed[Math.floor(Math.random() * unrevealed.length)];
+          this.handleTileClick(pick);
+        }
+      });
+    }
   }
 
   buildGridDOM() {
@@ -125,6 +204,8 @@ class MinesGame {
     this.gemsDisplay.textContent = '0';
     this.multDisplay.textContent = '1.00x';
     this.nextMultDisplay.textContent = this.calculateMultiplier(1).toFixed(2) + 'x';
+    if (this.bottomControls) this.bottomControls.style.display = 'flex';
+    this.updateLadder();
 
     if (window.soundFX) window.soundFX.playClick();
     this.onStateChange({ isPlaying: true, gemsFound: 0, currentMultiplier: 1.00, betAmount: this.betAmount });
@@ -160,6 +241,7 @@ class MinesGame {
       this.gemsDisplay.textContent = this.revealedCount;
       this.multDisplay.textContent = currentMult.toFixed(2) + 'x';
       this.nextMultDisplay.textContent = nextMult.toFixed(2) + 'x';
+      this.updateLadder();
 
       if (window.soundFX) window.soundFX.playDiamond(this.revealedCount);
 
@@ -193,6 +275,7 @@ class MinesGame {
 
   endGame(won, hitIndex = -1) {
     this.isPlaying = false;
+    if (this.bottomControls) this.bottomControls.style.display = 'none';
 
     if (!won) {
       window.appState.recordOutcome('Mines', this.betAmount, 0, 0);

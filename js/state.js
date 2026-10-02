@@ -37,9 +37,10 @@ class StateManager {
 
   getDefaultState() {
     return {
-      balance: 1000.00,
+      balance: 0.00,
       xp: 0,
       level: 1,
+      v3_zero_reset: true,
       user: {
         username: 'RainRoller_' + Math.floor(100 + Math.random() * 900),
         avatar: '🦁',
@@ -95,8 +96,42 @@ class StateManager {
       this.data = this.getDefaultState();
     }
 
+    // Force zero reset & wipe all stats if not yet applied
+    if (!this.data.v3_stats_wiped) {
+      this.wipeAllStats();
+    }
+
     // Recalculate level on load
     this.calculateLevel();
+  }
+
+  wipeAllStats() {
+    this.data.balance = 0.00;
+    this.data.xp = 0;
+    this.data.level = 1;
+    this.data.rakebackClaimable = 0.00;
+    this.data.stats = {
+      totalBets: 0,
+      totalWagered: 0.00,
+      totalWon: 0.00,
+      netProfit: 0.00,
+      biggestWin: 0.00,
+      biggestMultiplier: 0.00,
+      plinkoDrops: 0,
+      crashRounds: 0,
+      minesGames: 0,
+      diceRolls: 0,
+      slotsSpins: 0,
+      casesOpened: 0
+    };
+    this.data.history = [];
+    this.data.v3_stats_wiped = true;
+    this.data.v3_zero_reset = true;
+    this.saveState();
+  }
+
+  resetAllToZero() {
+    this.wipeAllStats();
   }
 
   saveState() {

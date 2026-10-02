@@ -17,7 +17,7 @@ const OLYMPUS_SYMBOLS = [
   { id: 'yellow_gem', char: '🟡', label: 'Topaz', pays: { min8: 0.5, min10: 1.0, min12: 5 }, color: '#eab308', weight: 18 },
   { id: 'green_gem', char: '🟢', label: 'Emerald', pays: { min8: 0.4, min10: 0.9, min12: 4 }, color: '#10b981', weight: 20 },
   { id: 'blue_gem', char: '🔵', label: 'Sapphire', pays: { min8: 0.25, min10: 0.75, min12: 2 }, color: '#3b82f6', weight: 22 },
-  { id: 'zeus', char: '⚡', label: 'Zeus Scatter', isScatter: true, color: '#00f0ff', weight: 3 }
+  { id: 'zeus', char: '⚡', label: 'Rain God Scatter', isScatter: true, color: '#00f0ff', weight: 3 }
 ];
 
 const MULTIPLIER_ORB_TIERS = [
@@ -110,7 +110,7 @@ class GatesOfOlympusGame {
               ${sym ? sym.renderZeusFullFigure() : '⚡'}
             </div>
             <div class="zeus-status-wrap">
-              <span class="zeus-name">⚡ ZEUS 1000 ⚡</span>
+              <span class="zeus-name">⚡ RAIN GOD 1000 ⚡</span>
               <span class="zeus-sub" id="olympusZeusStatus">SCATTERS ANYWHERE (8+)</span>
             </div>
           </div>
@@ -123,7 +123,7 @@ class GatesOfOlympusGame {
 
         <!-- Free Spins Banner (Active during feature) -->
         <div class="olympus-fs-banner" id="olympusFsBanner" style="display: ${this.inFreeSpins ? 'flex' : 'none'};">
-          <div class="fs-badge">⚡ OLYMPIAN FREE SPINS ⚡</div>
+          <div class="fs-badge">⚡ RAIN GOD FREE SPINS ⚡</div>
           <div class="fs-count">SPINS LEFT: <span class="text-gold font-bold" id="olympusFsLeft">${this.freeSpinsLeft}</span></div>
           <div class="fs-win">BONUS WIN: <span class="text-green font-bold" id="olympusFsTotalWin">$${this.totalFreeSpinsWin.toFixed(2)}</span></div>
         </div>
@@ -371,12 +371,12 @@ class GatesOfOlympusGame {
     }
 
     // Trigger Zeus Lightning Animation & Thunder
-    const zeusAvatar = document.getElementById('olympusZeusAvatar');
+    const zeusAvatar = document.getElementById('olympusZeusFigure') || document.getElementById('olympusZeusAvatar');
     const zeusStatus = document.getElementById('olympusZeusStatus');
     const flash = document.getElementById('zeusLightningFlash');
 
     if (zeusAvatar) zeusAvatar.classList.add('zeus-striking');
-    if (zeusStatus) zeusStatus.textContent = '⚡ ZEUS STRIKING MULTIPLIER! ⚡';
+    if (zeusStatus) zeusStatus.textContent = '⚡ RAIN GOD STRIKING MULTIPLIER! ⚡';
     if (flash) flash.classList.add('flash-active');
     if (window.soundFX && window.soundFX.playZeusStrike) window.soundFX.playZeusStrike();
 
@@ -557,7 +557,7 @@ class GatesOfOlympusGame {
 
     // Add winnings to balance and record outcome (+50 XP if win)
     if (finalPayout > 0) {
-      window.appState.recordBetOutcome('Gates of Olympus', betAmount, finalPayout, finalPayout / betAmount, finalPayout > betAmount);
+      window.appState.recordBetOutcome('Rain God', betAmount, finalPayout, finalPayout / betAmount, finalPayout > betAmount);
 
       // Check Big Win Celebration
       const mult = finalPayout / betAmount;
@@ -567,7 +567,7 @@ class GatesOfOlympusGame {
         window.soundFX.playSlotWin(finalPayout);
       }
     } else {
-      window.appState.recordBetOutcome('Gates of Olympus', betAmount, 0, 0, false);
+      window.appState.recordBetOutcome('Rain God', betAmount, 0, 0, false);
     }
 
     // Check Free Spins Trigger (4+ Scatters)
@@ -585,7 +585,7 @@ class GatesOfOlympusGame {
       } else {
         // Retrigger +5 Free Spins
         this.freeSpinsLeft += 5;
-        window.app?.showToast('⚡ ZEUS RETRIGGER! +5 FREE SPINS AWARDED! ⚡');
+        window.app?.showToast('⚡ RAIN GOD RETRIGGER! +5 FREE SPINS AWARDED! ⚡');
         const fsLeftEl = document.getElementById('olympusFsLeft');
         if (fsLeftEl) fsLeftEl.textContent = this.freeSpinsLeft;
       }
@@ -636,7 +636,7 @@ class GatesOfOlympusGame {
     if (fsWinEl) fsWinEl.textContent = '$0.00';
 
     if (window.soundFX && window.soundFX.playHoldAndSpinTrigger) window.soundFX.playHoldAndSpinTrigger();
-    window.app?.showToast('⚡ 15 GATES OF OLYMPUS FREE SPINS TRIGGERED! ⚡');
+    window.app?.showToast('⚡ 15 RAIN GOD FREE SPINS TRIGGERED! ⚡');
 
     setTimeout(() => {
       this.isSpinning = false;
@@ -663,7 +663,7 @@ class GatesOfOlympusGame {
     if (titleOverride) {
       title.textContent = titleOverride;
     } else if (mult >= 100) {
-      title.textContent = '⚡ ZEUS 1000 MAX WIN! ⚡';
+      title.textContent = '⚡ RAIN GOD 1000 MAX WIN! ⚡';
     } else if (mult >= 50) {
       title.textContent = '🏆 SENSATIONAL WIN! 🏆';
     } else {
@@ -692,3 +692,4 @@ class GatesOfOlympusGame {
 }
 
 window.GatesOfOlympusGame = GatesOfOlympusGame;
+window.RainGodGame = GatesOfOlympusGame;

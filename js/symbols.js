@@ -1600,25 +1600,255 @@ class CasinoSymbols {
         return `
           <div class="poster-svg-art poster-olympus">
             <svg viewBox="0 0 160 110" class="poster-vector">
-              <!-- Zeus Scatter Head Silhouette (Left) -->
-              <g transform="translate(52, 52) scale(0.7) translate(-50, -50)">
+              <!-- Rain God Silhouette (Left) -->
+              <g transform="translate(52, 50) scale(0.7) translate(-50, -50)">
                 <ellipse cx="50" cy="46" rx="22" ry="26" fill="#f8fafc"/>
-                <!-- Zeus Golden Crown -->
                 <path d="M28 26 L50 14 L72 26 L66 32 L34 32 Z" fill="#eab308"/>
-                <!-- Flowing White Beard -->
                 <path d="M30 46 Q24 78 50 86 Q76 78 70 46 Z" fill="#e2e8f0"/>
-                <!-- Lightning Eyes -->
                 <circle cx="42" cy="42" r="3.5" fill="#00f0ff"/>
                 <circle cx="58" cy="42" r="3.5" fill="#00f0ff"/>
               </g>
               <!-- Winged 1000x Multiplier Orb (Right) -->
-              <g transform="translate(112, 50)">
-                <!-- Wings -->
+              <g transform="translate(112, 48)">
                 <path d="M-10 0 C-22 -14 -28 -4 -16 6 Z" fill="#eab308"/>
                 <path d="M10 0 C22 -14 28 -4 16 6 Z" fill="#eab308"/>
-                <!-- Orb -->
                 <circle cx="0" cy="0" r="17" fill="#7e22ce" stroke="#eab308" stroke-width="2"/>
                 <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="11" fill="#fef08a" text-anchor="middle">1000×</text>
+              </g>
+              <g transform="translate(80, 95)">
+                <rect x="-44" y="-9" width="88" height="18" rx="9" fill="#090d16" stroke="#00f0ff" stroke-width="1.2"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="8.5" fill="#00f0ff" text-anchor="middle">⚡ RAIN GOD 1000 ⚡</text>
+              </g>
+            </svg>
+          </div>
+        `;
+      case 'chicken':
+        return `
+          <div class="poster-svg-art poster-chicken">
+            <svg viewBox="0 0 160 110" class="poster-vector">
+              <defs>
+                <linearGradient id="chRoad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#1e293b"/>
+                  <stop offset="100%" stop-color="#0f172a"/>
+                </linearGradient>
+              </defs>
+              <!-- Road Asphalt Background -->
+              <rect x="10" y="10" width="140" height="90" rx="8" fill="url(#chRoad)" stroke="#334155" stroke-width="1.5"/>
+              <line x1="10" y1="55" x2="150" y2="55" stroke="#f59e0b" stroke-width="2" stroke-dasharray="8 6"/>
+              <!-- Roasting Flame on Left -->
+              <g transform="translate(32, 60)">
+                <circle cx="0" cy="0" r="14" fill="rgba(239, 68, 68, 0.2)"/>
+                <text x="0" y="6" font-size="18" text-anchor="middle">🔥</text>
+              </g>
+              <!-- Hopping Hero Chicken -->
+              <g transform="translate(80, 48)">
+                <circle cx="0" cy="0" r="18" fill="rgba(16, 185, 129, 0.2)"/>
+                <text x="0" y="8" font-size="24" text-anchor="middle">🐔</text>
+              </g>
+              <!-- 2000x Multiplier Golden Bone on Right -->
+              <g transform="translate(126, 45)">
+                <circle cx="0" cy="0" r="16" fill="#f59e0b" stroke="#fef08a" stroke-width="1.5"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="8.5" fill="#451a03" text-anchor="middle">2,000×</text>
+              </g>
+              <!-- Bottom Badge -->
+              <g transform="translate(80, 94)">
+                <rect x="-42" y="-9" width="84" height="18" rx="9" fill="#022c22" stroke="#10b981" stroke-width="1.2"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="8.5" fill="#34d399" text-anchor="middle">CHICKEN ROAD</text>
+              </g>
+            </svg>
+          </div>
+        `;
+      case 'btcupdown':
+        return `
+          <div class="poster-svg-art poster-btcupdown">
+            <svg viewBox="0 0 160 110" class="poster-vector">
+              <defs>
+                <linearGradient id="btcGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#f59e0b"/>
+                  <stop offset="100%" stop-color="#b45309"/>
+                </linearGradient>
+                <linearGradient id="chartGlow" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="rgba(16, 185, 129, 0.4)"/>
+                  <stop offset="100%" stop-color="rgba(16, 185, 129, 0)"/>
+                </linearGradient>
+              </defs>
+              <!-- Mini Candlestick Chart in background -->
+              <path d="M15 80 L35 70 L55 75 L75 55 L95 62 L115 42 L135 32 L145 28" fill="none" stroke="#10b981" stroke-width="2.5"/>
+              <path d="M15 80 L35 70 L55 75 L75 55 L95 62 L115 42 L135 32 L145 28 L145 95 L15 95 Z" fill="url(#chartGlow)"/>
+              <!-- Green and Red mini candles -->
+              <rect x="32" y="65" width="5" height="12" fill="#ef4444"/>
+              <rect x="72" y="50" width="5" height="14" fill="#10b981"/>
+              <rect x="112" y="38" width="5" height="16" fill="#10b981"/>
+              <!-- Golden Bitcoin Medallion Center-Left -->
+              <g transform="translate(48, 45)">
+                <circle cx="0" cy="0" r="18" fill="url(#btcGrad)" stroke="#fef08a" stroke-width="2"/>
+                <text x="0" y="7" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#ffffff" text-anchor="middle">₿</text>
+              </g>
+              <!-- UP / DOWN Direction Badges -->
+              <g transform="translate(112, 36)">
+                <rect x="-24" y="-8" width="48" height="16" rx="4" fill="#065f46" stroke="#10b981" stroke-width="1.2"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="9" fill="#34d399" text-anchor="middle">▲ UP 1.95×</text>
+              </g>
+              <g transform="translate(112, 58)">
+                <rect x="-24" y="-8" width="48" height="16" rx="4" fill="#7f1d1d" stroke="#ef4444" stroke-width="1.2"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="9" fill="#f87171" text-anchor="middle">▼ DOWN 1.95×</text>
+              </g>
+              <!-- Bottom Badge -->
+              <g transform="translate(80, 95)">
+                <rect x="-44" y="-9" width="88" height="18" rx="9" fill="#0f172a" stroke="#f59e0b" stroke-width="1.2"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="8" fill="#fbbf24" text-anchor="middle">BTC 2.5M UP/DOWN</text>
+              </g>
+            </svg>
+          </div>
+        `;
+      case 'sweetbonanza':
+        return `
+          <div class="poster-svg-art poster-sweetbonanza">
+            <svg viewBox="0 0 160 110" class="poster-vector">
+              <rect x="10" y="10" width="140" height="90" rx="8" fill="#4c0519" stroke="#fb7185" stroke-width="1.5"/>
+              <g transform="translate(50, 48)">
+                <circle cx="0" cy="0" r="18" fill="#ec4899" stroke="#ffffff" stroke-width="2"/>
+                <path d="M-10 -10 Q0 0 10 10 M-10 10 Q0 0 10 -10" stroke="#ffffff" stroke-width="2.5"/>
+                <line x1="0" y1="18" x2="0" y2="35" stroke="#ffffff" stroke-width="3"/>
+              </g>
+              <g transform="translate(108, 44)">
+                <circle cx="0" cy="0" r="17" fill="url(#pokerGold)" stroke="#f43f5e" stroke-width="2"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="10" fill="#ffffff" text-anchor="middle">1000×</text>
+              </g>
+              <g transform="translate(80, 95)">
+                <rect x="-48" y="-9" width="96" height="18" rx="9" fill="#831843" stroke="#f472b6" stroke-width="1.2"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="8" fill="#fbcfe8" text-anchor="middle">SWEET BONANZA 1000</text>
+              </g>
+            </svg>
+          </div>
+        `;
+      case 'sugarrush':
+        return `
+          <div class="poster-svg-art poster-sugarrush">
+            <svg viewBox="0 0 160 110" class="poster-vector">
+              <rect x="10" y="10" width="140" height="90" rx="8" fill="#3b0764" stroke="#c084fc" stroke-width="1.5"/>
+              <g transform="translate(55, 48)">
+                <text x="0" y="8" font-size="28" text-anchor="middle">🧸</text>
+              </g>
+              <g transform="translate(105, 48)">
+                <rect x="-18" y="-18" width="36" height="36" rx="8" fill="#d946ef" stroke="#fef08a" stroke-width="1.5"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="9" fill="#ffffff" text-anchor="middle">1024×</text>
+              </g>
+              <g transform="translate(80, 95)">
+                <rect x="-45" y="-9" width="90" height="18" rx="9" fill="#581c87" stroke="#e879f9" stroke-width="1.2"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="8" fill="#fae8ff" text-anchor="middle">SUGAR RUSH 1000</text>
+              </g>
+            </svg>
+          </div>
+        `;
+      case 'wanted':
+        return `
+          <div class="poster-svg-art poster-wanted">
+            <svg viewBox="0 0 160 110" class="poster-vector">
+              <rect x="10" y="10" width="140" height="90" rx="8" fill="#18181b" stroke="#71717a" stroke-width="1.5"/>
+              <g transform="translate(52, 48)">
+                <text x="0" y="8" font-size="26" text-anchor="middle">💀</text>
+              </g>
+              <g transform="translate(108, 48)">
+                <rect x="-18" y="-14" width="36" height="28" rx="4" fill="#b91c1c" stroke="#fef08a" stroke-width="1.5"/>
+                <text x="0" y="5" font-family="Outfit, sans-serif" font-weight="900" font-size="12" fill="#ffffff" text-anchor="middle">VS</text>
+              </g>
+              <g transform="translate(80, 95)">
+                <rect x="-48" y="-9" width="96" height="18" rx="9" fill="#27272a" stroke="#dc2626" stroke-width="1.2"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="7.5" fill="#fca5a5" text-anchor="middle">WANTED DEAD OR A WILD</text>
+              </g>
+            </svg>
+          </div>
+        `;
+      case 'bigbass':
+        return `
+          <div class="poster-svg-art poster-bigbass">
+            <svg viewBox="0 0 160 110" class="poster-vector">
+              <rect x="10" y="10" width="140" height="90" rx="8" fill="#082f49" stroke="#38bdf8" stroke-width="1.5"/>
+              <g transform="translate(55, 48)">
+                <text x="0" y="8" font-size="30" text-anchor="middle">🐟</text>
+              </g>
+              <g transform="translate(110, 48)">
+                <circle cx="0" cy="0" r="16" fill="#0284c7" stroke="#fbbf24" stroke-width="1.5"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="8.5" fill="#fef08a" text-anchor="middle">SPLASH</text>
+              </g>
+              <g transform="translate(80, 95)">
+                <rect x="-45" y="-9" width="90" height="18" rx="9" fill="#0c4a6e" stroke="#38bdf8" stroke-width="1.2"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="8" fill="#bae6fd" text-anchor="middle">BIG BASS SPLASH</text>
+              </g>
+            </svg>
+          </div>
+        `;
+      case 'doghouse':
+        return `
+          <div class="poster-svg-art poster-doghouse">
+            <svg viewBox="0 0 160 110" class="poster-vector">
+              <rect x="10" y="10" width="140" height="90" rx="8" fill="#451a03" stroke="#f59e0b" stroke-width="1.5"/>
+              <g transform="translate(55, 48)">
+                <text x="0" y="8" font-size="28" text-anchor="middle">🐶</text>
+              </g>
+              <g transform="translate(108, 48)">
+                <text x="0" y="8" font-size="28" text-anchor="middle">🦴</text>
+              </g>
+              <g transform="translate(80, 95)">
+                <rect x="-48" y="-9" width="96" height="18" rx="9" fill="#78350f" stroke="#fbbf24" stroke-width="1.2"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="8" fill="#fef08a" text-anchor="middle">THE DOG HOUSE MEGA</text>
+              </g>
+            </svg>
+          </div>
+        `;
+      case 'bookofdead':
+        return `
+          <div class="poster-svg-art poster-bookofdead">
+            <svg viewBox="0 0 160 110" class="poster-vector">
+              <rect x="10" y="10" width="140" height="90" rx="8" fill="#312e81" stroke="#f59e0b" stroke-width="1.5"/>
+              <g transform="translate(55, 48)">
+                <text x="0" y="8" font-size="30" text-anchor="middle">📖</text>
+              </g>
+              <g transform="translate(110, 48)">
+                <text x="0" y="8" font-size="26" text-anchor="middle">🏺</text>
+              </g>
+              <g transform="translate(80, 95)">
+                <rect x="-44" y="-9" width="88" height="18" rx="9" fill="#1e1b4b" stroke="#eab308" stroke-width="1.2"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="8" fill="#fef08a" text-anchor="middle">BOOK OF DEAD</text>
+              </g>
+            </svg>
+          </div>
+        `;
+      case 'razorshark':
+        return `
+          <div class="poster-svg-art poster-razorshark">
+            <svg viewBox="0 0 160 110" class="poster-vector">
+              <rect x="10" y="10" width="140" height="90" rx="8" fill="#042f2e" stroke="#14b8a6" stroke-width="1.5"/>
+              <g transform="translate(55, 48)">
+                <text x="0" y="8" font-size="30" text-anchor="middle">🦈</text>
+              </g>
+              <g transform="translate(110, 48)">
+                <circle cx="0" cy="0" r="16" fill="#eab308" stroke="#fef08a" stroke-width="1.5"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="9" fill="#78350f" text-anchor="middle">COINS</text>
+              </g>
+              <g transform="translate(80, 95)">
+                <rect x="-42" y="-9" width="84" height="18" rx="9" fill="#134e4a" stroke="#2dd4bf" stroke-width="1.2"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="8" fill="#ccfbf1" text-anchor="middle">RAZOR SHARK</text>
+              </g>
+            </svg>
+          </div>
+        `;
+      case 'sanquentin':
+        return `
+          <div class="poster-svg-art poster-sanquentin">
+            <svg viewBox="0 0 160 110" class="poster-vector">
+              <rect x="10" y="10" width="140" height="90" rx="8" fill="#1c1917" stroke="#ea580c" stroke-width="1.5"/>
+              <g transform="translate(55, 48)">
+                <text x="0" y="8" font-size="28" text-anchor="middle">⛓️</text>
+              </g>
+              <g transform="translate(108, 48)">
+                <rect x="-18" y="-12" width="36" height="24" rx="4" fill="#c2410c" stroke="#fef08a" stroke-width="1.5"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="8.5" fill="#ffffff" text-anchor="middle">xWAYS</text>
+              </g>
+              <g transform="translate(80, 95)">
+                <rect x="-48" y="-9" width="96" height="18" rx="9" fill="#292524" stroke="#f97316" stroke-width="1.2"/>
+                <text x="0" y="4" font-family="Outfit, sans-serif" font-weight="900" font-size="8" fill="#fed7aa" text-anchor="middle">SAN QUENTIN xWAYS</text>
               </g>
             </svg>
           </div>
