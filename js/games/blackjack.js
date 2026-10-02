@@ -1,4 +1,4 @@
-// High Stakes VIP Blackjack Table Room Engine for ARH BET
+// High Stakes VIP Blackjack Table Room Engine for DruBet
 // Features:
 // - 5-Seat VIP Table with Luxury Armchairs & Seated High Rollers (Viktor, Sofia, YOU, Dmitri, Elena)
 // - Pit Boss Marco (🤵‍♂️) dealing from 6-Deck Shoe
@@ -60,7 +60,7 @@ class BlackjackGame {
           <div class="vip-room-badge">
             <span class="room-crown">👑</span>
             <div class="room-title-wrap">
-              <span class="room-title">ARH BET HIGH STAKES VIP SALON</span>
+              <span class="room-title">DRUBET HIGH STAKES VIP SALON</span>
               <span class="room-sub">TABLE #1 • $25 - $5,000 LIMITS • 5 SEATS</span>
             </div>
           </div>

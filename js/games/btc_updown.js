@@ -1,4 +1,4 @@
-// BTC Up or Down (2.5 Minute Intervals) Game Engine for ARH BET
+// BTC Up or Down (2.5 Minute Intervals) Game Engine for DruBet
 // Replicates high-stakes crypto binary candlestick prediction:
 // - 2.5 Minute (150s) Expiry Interval Rounds
 // - Real-time HTML5 Canvas Candlestick & Tick Chart with Strike Price & Live Price lines

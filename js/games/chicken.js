@@ -1,4 +1,4 @@
-// Chicken Road Game Engine for ARH BET
+// Chicken Road Game Engine for DruBet
 // Replicates the iconic viral crypto casino crossing game (MyStake Chicken / Roobet Chicken Cross / Crossy Road):
 // - 4 Difficulties: Easy (25 Steps), Medium (20 Steps), Hard (15 Steps), Daredevil (10 Steps)
 // - Dynamic Multiplier Ladder scaling all the way to 2,000x+

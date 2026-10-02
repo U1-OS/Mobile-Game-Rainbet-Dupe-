@@ -1,4 +1,4 @@
-# 🌧️ RainStake Mobile — Simulated Crypto Casino Game
+# ⚡ DruBet Mobile — High Stakes VIP Crypto Casino & Real Slots Game
 
 > **100% Free-to-Play Mobile Game • Simulated Money Only • Zero Real Gambling**  
 > A faithful mobile-optimized recreation of the signature games, aesthetics, and community mechanics from **Stake.com** and **Rainbet**.

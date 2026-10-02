@@ -95,7 +95,7 @@ const GAME_METADATA = {
     name: 'Rain God 1000',
     rtp: '96.50% RTP',
     category: 'slots',
-    provider: 'ARH BET SLOTS',
+    provider: 'DRUBET SLOTS',
     rules: `
       <h4>Rain God 1000 Rules</h4>
       <ul>
@@ -435,7 +435,7 @@ class RainStakeApp {
         if (progress === 60) status.textContent = 'Loading Vegas & Rain Originals Engines...';
         if (progress === 85) status.textContent = 'Syncing Lightning Link Jackpots & Rain Pool...';
         if (progress >= 100) {
-          status.textContent = 'Welcome to Rainbet Mobile!';
+          status.textContent = 'Welcome to DruBet!';
           clearInterval(interval);
           setTimeout(() => {
             splash.classList.add('fade-out');
